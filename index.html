@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guía de Estudio: Sistemas Informáticos (1.º DAW)</title>
+  <title>Guía de Estudio: Sistemas Informáticos (1.º DAM)</title>
 
   <!-- Google Fonts: Plus Jakarta Sans y JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -101,7 +101,7 @@
           <div class="min-w-0">
             <div class="flex flex-wrap items-center gap-2">
               <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-slate-900 dark:text-white truncate">
-                Sistemas Informáticos · 1.º DAW
+                Sistemas Informáticos · 1.º DAM
               </h1>
               <span class="hidden md:inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 dark:bg-indigo-950/80 dark:text-indigo-300 border border-indigo-200/70 dark:border-indigo-800/70">
                 <span>Tema 1: ~30–35%</span>
@@ -1040,28 +1040,10 @@
           </div>
         </div>
 
-        <!-- Selector de modelo -->
-        <div>
-          <label for="apiModelSelect" class="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1.5">Modelo de Gemini</label>
-          <select
-            id="apiModelSelect"
-            onchange="handleModelSelectChange()"
-            class="w-full rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3.5 py-2.5 font-mono text-sm font-semibold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            <option value="gemini-3.8-flash">gemini-3.8-flash (Recomendado)</option>
-            <option value="gemini-2.5-pro">gemini-2.5-pro</option>
-            <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite</option>
-            <option value="custom">Personalizado...</option>
-          </select>
-
-          <div id="customModelWrapper" class="hidden mt-2">
-            <input
-              id="customModelInput"
-              type="text"
-              placeholder="Escribe el ID del modelo (ej. gemini-3.8-flash)"
-              class="w-full rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3.5 py-2 font-mono text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
+        <!-- Modelo fijo -->
+        <div class="rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 px-3.5 py-2.5 flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-600 dark:text-slate-300">Modelo activo</span>
+          <span id="fixedModelLabel" class="font-mono text-xs sm:text-sm font-bold text-indigo-600 dark:text-indigo-400">gemini-3.5-flash-lite</span>
         </div>
 
         <!-- Resultado de prueba de conexión -->
@@ -1537,13 +1519,10 @@
       THEME: 'si_theme',
       MASTERED_CONCEPTS: 'si_mastered_concepts',
       MASTERED_CARDS: 'si_mastered_cards',
-      API_KEY: 'si_gemini_api_key',
-      API_MODEL: 'si_gemini_model',
-      API_CUSTOM_MODEL: 'si_gemini_custom_model'
+      API_KEY: 'si_gemini_api_key'
     };
 
-    const KNOWN_MODELS = ['gemini-3.8-flash', 'gemini-2.5-pro', 'gemini-2.5-flash-lite'];
-    const DEFAULT_MODEL = 'gemini-3.8-flash';
+    const FIXED_MODEL = 'gemini-3.5-flash-lite';
 
     let state = {
       activeTab: 'apuntes',
@@ -1581,14 +1560,6 @@
         if (Array.isArray(mc)) state.masteredConcepts = new Set(mc);
         const mcards = JSON.parse(localStorage.getItem(STORAGE_KEYS.MASTERED_CARDS) || '[]');
         if (Array.isArray(mcards)) state.masteredCards = new Set(mcards);
-      } catch (e) {}
-
-      // Migración automática de modelos retirados a gemini-3.8-flash
-      try {
-        const savedModel = (localStorage.getItem(STORAGE_KEYS.API_MODEL) || '').trim();
-        if (!savedModel || savedModel === 'gemini-2.5-flash' || savedModel === 'gemini-2.0-flash') {
-          localStorage.setItem(STORAGE_KEYS.API_MODEL, DEFAULT_MODEL);
-        }
       } catch (e) {}
     }
 
@@ -1687,19 +1658,7 @@
     }
 
     function getActiveModel() {
-      try {
-        const stored = (localStorage.getItem(STORAGE_KEYS.API_MODEL) || DEFAULT_MODEL).trim();
-        if (stored === 'custom') {
-          const custom = (localStorage.getItem(STORAGE_KEYS.API_CUSTOM_MODEL) || '').trim();
-          return custom || DEFAULT_MODEL;
-        }
-        if (!stored || stored === 'gemini-2.5-flash' || stored === 'gemini-2.0-flash') {
-          return DEFAULT_MODEL;
-        }
-        return stored;
-      } catch (e) {
-        return DEFAULT_MODEL;
-      }
+      return FIXED_MODEL;
     }
 
     function updateApiStatusDot() {
@@ -1715,27 +1674,12 @@
     function openApiModal() {
       const overlay = document.getElementById('apiModalOverlay');
       const keyInput = document.getElementById('apiKeyInput');
-      const modelSelect = document.getElementById('apiModelSelect');
-      const customWrap = document.getElementById('customModelWrapper');
-      const customInput = document.getElementById('customModelInput');
       const testResult = document.getElementById('apiTestResult');
 
       keyInput.value = getSavedApiKey();
       keyInput.type = 'password';
       document.getElementById('btnToggleKeyVis').textContent = 'Ver';
-
-      const storedModel = (localStorage.getItem(STORAGE_KEYS.API_MODEL) || DEFAULT_MODEL).trim();
-      if (KNOWN_MODELS.includes(storedModel)) {
-        modelSelect.value = storedModel;
-        customWrap.classList.add('hidden');
-      } else if (storedModel === 'custom') {
-        modelSelect.value = 'custom';
-        customWrap.classList.remove('hidden');
-        customInput.value = localStorage.getItem(STORAGE_KEYS.API_CUSTOM_MODEL) || '';
-      } else {
-        modelSelect.value = DEFAULT_MODEL;
-        customWrap.classList.add('hidden');
-      }
+      document.getElementById('fixedModelLabel').textContent = FIXED_MODEL;
 
       testResult.classList.add('hidden');
       overlay.classList.remove('hidden');
@@ -1757,21 +1701,8 @@
       }
     }
 
-    function handleModelSelectChange() {
-      const val = document.getElementById('apiModelSelect').value;
-      const wrap = document.getElementById('customModelWrapper');
-      if (val === 'custom') {
-        wrap.classList.remove('hidden');
-        document.getElementById('customModelInput').focus();
-      } else {
-        wrap.classList.add('hidden');
-      }
-    }
-
     function saveApiConfig() {
       const key = document.getElementById('apiKeyInput').value.trim();
-      const modelSel = document.getElementById('apiModelSelect').value;
-      const customModel = document.getElementById('customModelInput').value.trim();
 
       try {
         if (key) {
@@ -1779,14 +1710,10 @@
         } else {
           localStorage.removeItem(STORAGE_KEYS.API_KEY);
         }
-        localStorage.setItem(STORAGE_KEYS.API_MODEL, modelSel);
-        if (modelSel === 'custom') {
-          localStorage.setItem(STORAGE_KEYS.API_CUSTOM_MODEL, customModel || DEFAULT_MODEL);
-        }
       } catch (e) {}
 
       updateApiStatusDot();
-      showToast(`Configuración guardada (${getActiveModel()})`, 'success');
+      showToast(`Configuración guardada (${FIXED_MODEL})`, 'success');
       closeApiModal();
     }
 
@@ -1824,10 +1751,7 @@
 
     async function testApiConnection() {
       const key = document.getElementById('apiKeyInput').value.trim();
-      const modelSel = document.getElementById('apiModelSelect').value;
-      const model = modelSel === 'custom'
-        ? (document.getElementById('customModelInput').value.trim() || DEFAULT_MODEL)
-        : modelSel;
+      const model = FIXED_MODEL;
 
       const resBox = document.getElementById('apiTestResult');
       const btn = document.getElementById('btnTestApi');
