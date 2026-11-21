@@ -1,0 +1,2456 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guía Interactiva de Examen: Sistemas Informáticos (1.º DAW)</title>
+  <!-- Fuente Inter para máxima legibilidad en estudio -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    /* Estilos mínimos necesarios para giro 3D de flashcards y transiciones suaves */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .transform-style-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- Barra superior fija con título, pista del profesor y progreso global -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <!-- Título e insignia del profesor -->
+        <div class="flex items-start sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-md shadow-indigo-500/20">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+              </svg>
+            </div>
+            <div>
+              <h1 class="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
+                Guía Interactiva: Sistemas Informáticos (1.º DAW)
+              </h1>
+              <div class="mt-1 inline-flex flex-wrap items-center gap-1.5 text-xs font-medium px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 dark:bg-amber-900/40 dark:text-amber-200 border border-amber-200 dark:border-amber-800/60">
+                <span>Pista profesor:</span>
+                <span>Tema 1: 30-35%</span>
+                <span class="opacity-50">|</span>
+                <span>Tema 2: 65-70%</span>
+                <span class="opacity-50">|</span>
+                <span class="font-bold text-amber-700 dark:text-amber-300">Conversiones: CAE SEGURO</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botón modo oscuro en móvil -->
+          <button id="themeToggleMobile" onclick="toggleTheme()" aria-label="Cambiar tema claro u oscuro" class="md:hidden p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+            <span class="theme-icon-sun hidden">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            </span>
+            <span class="theme-icon-moon">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+            </span>
+          </button>
+        </div>
+
+        <!-- Barra de progreso global + toggle tema en escritorio -->
+        <div class="flex items-center gap-4">
+          <div class="flex-1 md:w-64">
+            <div class="flex justify-between text-xs font-semibold mb-1">
+              <span class="text-slate-600 dark:text-slate-400">Progreso global</span>
+              <span id="globalProgressText" class="text-indigo-600 dark:text-indigo-400">0% (0/115)</span>
+            </div>
+            <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+              <div id="globalProgressBar" class="h-full bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <button id="themeToggleDesktop" onclick="toggleTheme()" aria-label="Cambiar tema claro u oscuro" class="hidden md:flex items-center justify-center p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+            <span class="theme-icon-sun hidden">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            </span>
+            <span class="theme-icon-moon">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Navegación principal por 5 pestañas -->
+      <nav aria-label="Navegación principal" class="mt-3 -mb-3 flex gap-1.5 overflow-x-auto no-scrollbar pb-1">
+        <button onclick="switchMainTab('apuntes')" data-tab="apuntes" class="main-tab-btn shrink-0 px-3.5 py-2.5 text-sm font-semibold rounded-t-xl border-b-2 transition flex items-center gap-2">
+          <span>Apuntes Interactivos</span>
+        </button>
+        <button onclick="switchMainTab('flashcards')" data-tab="flashcards" class="main-tab-btn shrink-0 px-3.5 py-2.5 text-sm font-semibold rounded-t-xl border-b-2 transition flex items-center gap-2">
+          <span>Tarjetas (Flashcards)</span>
+        </button>
+        <button onclick="switchMainTab('simulacro')" data-tab="simulacro" class="main-tab-btn shrink-0 px-3.5 py-2.5 text-sm font-semibold rounded-t-xl border-b-2 transition flex items-center gap-2">
+          <span>Simulacro Escrito</span>
+        </button>
+        <button onclick="switchMainTab('conversiones')" data-tab="conversiones" class="main-tab-btn shrink-0 px-3.5 py-2.5 text-sm font-semibold rounded-t-xl border-b-2 transition flex items-center gap-2">
+          <span>Práctica Conversiones</span>
+          <span class="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-rose-100 text-rose-700 dark:bg-rose-900/50 dark:text-rose-300">CAE SEGURO</span>
+        </button>
+        <button onclick="switchMainTab('esquemas')" data-tab="esquemas" class="main-tab-btn shrink-0 px-3.5 py-2.5 text-sm font-semibold rounded-t-xl border-b-2 transition flex items-center gap-2">
+          <span>Esquemas Visuales</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Notificación tipo toast (sustituye a alert) -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 pointer-events-none flex flex-col gap-2"></div>
+
+  <!-- Contenedor principal -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- ========================================================= -->
+    <!-- PESTAÑA 1: APUNTES INTERACTIVOS                           -->
+    <!-- ========================================================= -->
+    <section id="tab-apuntes" class="tab-panel">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Selector lateral de los 7 temas -->
+        <aside class="lg:col-span-4 xl:col-span-3 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm lg:sticky lg:top-36">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Temario del Examen</h2>
+            <button onclick="openResetModal()" class="text-xs text-slate-400 hover:text-rose-500 transition">Reiniciar</button>
+          </div>
+          <div id="topicNavList" class="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-x-visible no-scrollbar pb-1 lg:pb-0">
+            <!-- Generado por JS -->
+          </div>
+        </aside>
+
+        <!-- Contenido de apuntes -->
+        <div class="lg:col-span-8 xl:col-span-9 space-y-5">
+          <!-- Barra de herramientas: buscador + modo autoevaluación -->
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
+            <div class="relative flex-1">
+              <svg class="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+              <input id="notesSearchInput" type="text" placeholder="Buscar concepto en todo el temario (ej. ALU, DNS, NAT, 404)..." class="w-full pl-11 pr-9 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition" oninput="handleNotesSearch(this.value)" />
+              <button id="clearSearchBtn" onclick="clearNotesSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1" aria-label="Limpiar búsqueda">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+
+            <button id="activeRecallBtn" onclick="toggleActiveRecall()" class="shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold border transition flex items-center justify-center gap-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/30">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
+              <span id="activeRecallBtnLabel">Modo Autoevaluación (Ocultar)</span>
+            </button>
+          </div>
+
+          <!-- Aviso cuando el modo autoevaluación está activo -->
+          <div id="activeRecallBanner" class="hidden rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 px-4 py-3 text-sm text-indigo-800 dark:text-indigo-200 flex items-center justify-between gap-2">
+            <span><strong>Modo Autoevaluación activo:</strong> las definiciones están difuminadas. Haz clic en cualquier tarjeta para revelarla u ocultarla.</span>
+          </div>
+
+          <!-- Contenedor de los conceptos y preguntas del tema -->
+          <div id="notesContent" class="space-y-6">
+            <!-- Generado por JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- PESTAÑA 2: TARJETAS (FLASHCARDS 3D)                       -->
+    <!-- ========================================================= -->
+    <section id="tab-flashcards" class="tab-panel hidden">
+      <div class="max-w-3xl mx-auto space-y-6">
+        <!-- Controles y filtros -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 class="text-lg font-bold text-slate-900 dark:text-white">Tarjetas de Examen (35 Preguntas)</h2>
+              <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Haz clic en la tarjeta o pulsa <kbd class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono text-xs">Espacio</kbd> para girar y ver la respuesta corta.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span id="fcMasteredBadge" class="px-3 py-1.5 rounded-xl bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300 text-xs font-bold">
+                Dominadas: 0 / 35
+              </span>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
+            <select id="fcFilterSelect" onchange="changeFlashcardFilter(this.value)" class="flex-1 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3.5 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <option value="all">Todos los temas (35 preguntas)</option>
+              <option value="tema1">Solo Tema 1 (15 preguntas)</option>
+              <option value="tema2">Solo Tema 2 (20 preguntas)</option>
+              <option value="1.1">Tema 1.1: Conceptos Básicos y Arquitectura</option>
+              <option value="1.2">Tema 1.2: Codificación, Sistemas Numéricos y Medidas</option>
+              <option value="1.3">Tema 1.3: Hardware y Periféricos</option>
+              <option value="2.1">Tema 2.1: Sistemas de Comunicación, Redes y Dispositivos</option>
+              <option value="2.2">Tema 2.2: Modelo TCP/IP, Capas y Protocolos</option>
+              <option value="2.3">Tema 2.3: El Protocolo IP (IPv4, IPv6 y Comandos)</option>
+              <option value="2.4">Tema 2.4: Protocolo HTTP y HTTPS</option>
+            </select>
+
+            <div class="flex gap-2">
+              <button onclick="shuffleFlashcards()" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-semibold transition flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                <span>Barajar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta 3D -->
+        <div class="perspective-1000 w-full">
+          <div id="flashcardInner" onclick="flipFlashcard()" class="relative w-full min-h-[290px] sm:min-h-[320px] transition-transform duration-500 transform-style-3d cursor-pointer select-none">
+            <!-- Cara delantera (Pregunta) -->
+            <div class="absolute inset-0 backface-hidden bg-white dark:bg-slate-900 rounded-3xl border-2 border-slate-200 dark:border-slate-800 shadow-lg p-6 sm:p-8 flex flex-col justify-between">
+              <div class="flex items-center justify-between gap-2">
+                <span id="fcTopicBadge" class="text-xs font-bold px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300">Tema 1.1</span>
+                <span id="fcCounter" class="text-xs font-semibold text-slate-400">Tarjeta 1 de 35</span>
+              </div>
+
+              <div class="my-auto py-4 text-center">
+                <span class="text-xs font-bold uppercase tracking-widest text-slate-400 block mb-2">Pregunta de examen</span>
+                <h3 id="fcQuestionText" class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white leading-snug">
+                  Cargando pregunta...
+                </h3>
+              </div>
+
+              <div class="flex items-center justify-between text-xs text-slate-400">
+                <span id="fcStatusTag" class="font-medium"></span>
+                <span class="flex items-center gap-1 text-indigo-500 font-semibold">
+                  <span>Clic para girar</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                </span>
+              </div>
+            </div>
+
+            <!-- Cara trasera (Respuesta perfecta) -->
+            <div class="absolute inset-0 backface-hidden rotate-y-180 bg-gradient-to-br from-indigo-600 to-blue-700 dark:from-indigo-900 dark:to-slate-900 text-white rounded-3xl border-2 border-indigo-500 dark:border-indigo-700 shadow-xl p-6 sm:p-8 flex flex-col justify-between">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-bold px-3 py-1 rounded-full bg-white/20 text-white">Respuesta perfecta (1-2 frases)</span>
+                <span id="fcCounterBack" class="text-xs font-semibold text-indigo-200">1 / 35</span>
+              </div>
+
+              <div class="my-auto py-4 text-center">
+                <p id="fcAnswerText" class="text-lg sm:text-xl font-medium leading-relaxed text-white">
+                  Cargando respuesta...
+                </p>
+              </div>
+
+              <div class="text-center text-xs text-indigo-200">
+                Haz clic para volver a ver la pregunta
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones de acción de Flashcards -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <button onclick="prevFlashcard()" class="px-4 py-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-sm transition flex items-center justify-center gap-1.5">
+            <span>&larr; Anterior</span>
+          </button>
+
+          <button onclick="markFlashcardReview()" class="px-4 py-3 rounded-2xl bg-amber-100 dark:bg-amber-900/40 text-amber-900 dark:text-amber-200 border border-amber-200 dark:border-amber-800/60 hover:bg-amber-200 dark:hover:bg-amber-900/60 font-semibold text-sm transition">
+            Repasar después
+          </button>
+
+          <button onclick="markFlashcardKnown()" class="px-4 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-sm transition">
+            Me la sé &#10003;
+          </button>
+
+          <button onclick="nextFlashcard()" class="px-4 py-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-sm transition flex items-center justify-center gap-1.5">
+            <span>Siguiente &rarr;</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- PESTAÑA 3: SIMULACRO ESCRITO                              -->
+    <!-- ========================================================= -->
+    <section id="tab-simulacro" class="tab-panel hidden">
+      <div class="max-w-3xl mx-auto">
+        <!-- Pantalla de inicio del simulacro -->
+        <div id="simStartView" class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
+          <div class="space-y-2">
+            <span class="inline-block text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300">Entrenamiento real de examen</span>
+            <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">Simulacro de Examen Escrito</h2>
+            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400">
+              El profesor pide <strong>respuestas directas de 1 o 2 frases cortas</strong>. Escribe tu respuesta, compárala al instante con la respuesta perfecta del resumen y evalúate para obtener tu nota sobre 10.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <button onclick="startSimulation('oficial')" class="text-left p-5 rounded-2xl border-2 border-indigo-500 bg-indigo-50/70 dark:bg-indigo-950/40 hover:bg-indigo-100/70 dark:hover:bg-indigo-900/50 transition space-y-2 group">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-600 text-white">Recomendado</span>
+              </div>
+              <h3 class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300">Simulacro Oficial</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400">10 preguntas respetando los pesos del profesor (~35% Tema 1 / ~65% Tema 2).</p>
+            </button>
+
+            <button onclick="startSimulation('tema1')" class="text-left p-5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 hover:border-indigo-400 transition space-y-2">
+              <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200">30-35% del examen</span>
+              <h3 class="font-bold text-slate-900 dark:text-white">Solo Tema 1</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400">10 preguntas aleatorias de los temas 1.1, 1.2 y 1.3.</p>
+            </button>
+
+            <button onclick="startSimulation('tema2')" class="text-left p-5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 hover:border-indigo-400 transition space-y-2">
+              <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200">65-70% del examen</span>
+              <h3 class="font-bold text-slate-900 dark:text-white">Solo Tema 2</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400">10 preguntas aleatorias de los temas 2.1, 2.2, 2.3 y 2.4.</p>
+            </button>
+          </div>
+        </div>
+
+        <!-- Pantalla activa del simulacro -->
+        <div id="simActiveView" class="hidden space-y-5">
+          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <span id="simModeLabel" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300">Simulacro Oficial</span>
+              <span id="simProgressLabel" class="text-sm font-bold text-slate-700 dark:text-slate-200">Pregunta 1 de 10</span>
+            </div>
+            <button onclick="cancelSimulation()" class="text-xs font-semibold text-slate-400 hover:text-rose-500 transition">Salir</button>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm space-y-5">
+            <div class="space-y-2">
+              <span id="simQuestionTopic" class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Tema 1.1</span>
+              <h3 id="simQuestionText" class="text-xl font-bold text-slate-900 dark:text-white leading-snug"></h3>
+            </div>
+
+            <!-- Área para escribir respuesta -->
+            <div id="simInputPhase" class="space-y-4">
+              <div>
+                <label for="simAnswerTextarea" class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
+                  Escribe tu respuesta (intenta resumirlo en 1 o 2 frases claras):
+                </label>
+                <textarea id="simAnswerTextarea" rows="4" placeholder="Escribe aquí tu respuesta como en el examen..." class="w-full rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"></textarea>
+              </div>
+              <button onclick="checkSimulationAnswer()" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-md shadow-indigo-500/20 transition">
+                Comprobar respuesta
+              </button>
+            </div>
+
+            <!-- Fase de comparación y autoevaluación -->
+            <div id="simComparePhase" class="hidden space-y-5">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                  <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-2">Tu respuesta</span>
+                  <p id="simUserAnswerDisplay" class="text-sm text-slate-800 dark:text-slate-200 whitespace-pre-wrap"></p>
+                </div>
+                <div class="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800">
+                  <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 block mb-2">Respuesta perfecta del resumen</span>
+                  <p id="simPerfectAnswerDisplay" class="text-sm font-medium text-emerald-950 dark:text-emerald-100"></p>
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <p class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 text-center">¿Cómo lo has hecho? Evalúa tu respuesta:</p>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <button onclick="gradeSimulationAnswer(1)" class="py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition shadow-sm">
+                    Correcta (1 pt)
+                  </button>
+                  <button onclick="gradeSimulationAnswer(0.5)" class="py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm transition shadow-sm">
+                    Parcial (0.5 pt)
+                  </button>
+                  <button onclick="gradeSimulationAnswer(0)" class="py-3 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm transition shadow-sm">
+                    Incorrecta (0 pt)
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pantalla de resultados del simulacro -->
+        <div id="simResultView" class="hidden space-y-6">
+          <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm text-center space-y-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Resultado del simulacro</span>
+            <div class="text-5xl sm:text-6xl font-extrabold text-indigo-600 dark:text-indigo-400">
+              <span id="simFinalScore">0.0</span><span class="text-2xl text-slate-400 font-semibold"> / 10</span>
+            </div>
+            <p id="simFinalFeedback" class="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-lg mx-auto"></p>
+            <div class="pt-2 flex flex-wrap justify-center gap-3">
+              <button onclick="cancelSimulation()" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm transition">
+                Hacer otro simulacro
+              </button>
+              <button onclick="switchMainTab('apuntes')" class="px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold text-sm transition">
+                Volver a los apuntes
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm space-y-4">
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Resumen y preguntas a repasar</h3>
+            <div id="simReviewList" class="space-y-3"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- PESTAÑA 4: PRÁCTICA CONVERSIONES (CAE SEGURO)             -->
+    <!-- ========================================================= -->
+    <section id="tab-conversiones" class="tab-panel hidden space-y-6">
+      <!-- SECCIÓN A: Interruptores interactivos de 4 bits (8-4-2-1) -->
+      <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-sm space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">Sección A &bull; Tabla obligatoria del 0 al 15</span>
+            <h2 class="text-xl font-extrabold text-slate-900 dark:text-white">Interruptores Interactivos de 4 bits (8 - 4 - 2 - 1)</h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Enciende (1) o apaga (0) cada bit para ver cómo se suman los pesos y se obtiene el valor Decimal y Hexadecimal.</p>
+          </div>
+          <button onclick="resetBitSwitches()" class="self-start sm:self-center px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-semibold transition">
+            Poner a 0000
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <!-- 4 interruptores -->
+          <div class="lg:col-span-7 space-y-4">
+            <div class="grid grid-cols-4 gap-3">
+              <button onclick="toggleBitSwitch(0)" id="bitSwitch0" class="p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 flex flex-col items-center gap-1 transition active:scale-95">
+                <span class="text-xs font-bold text-slate-400">Peso 8 (2&sup3;)</span>
+                <span id="bitVal0" class="text-3xl sm:text-4xl font-mono font-extrabold text-slate-400">0</span>
+                <span class="text-[11px] font-semibold text-slate-400" id="bitState0">APAGADO</span>
+              </button>
+              <button onclick="toggleBitSwitch(1)" id="bitSwitch1" class="p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 flex flex-col items-center gap-1 transition active:scale-95">
+                <span class="text-xs font-bold text-slate-400">Peso 4 (2&sup2;)</span>
+                <span id="bitVal1" class="text-3xl sm:text-4xl font-mono font-extrabold text-slate-400">0</span>
+                <span class="text-[11px] font-semibold text-slate-400" id="bitState1">APAGADO</span>
+              </button>
+              <button onclick="toggleBitSwitch(2)" id="bitSwitch2" class="p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 flex flex-col items-center gap-1 transition active:scale-95">
+                <span class="text-xs font-bold text-slate-400">Peso 2 (2&sup1;)</span>
+                <span id="bitVal2" class="text-3xl sm:text-4xl font-mono font-extrabold text-slate-400">0</span>
+                <span class="text-[11px] font-semibold text-slate-400" id="bitState2">APAGADO</span>
+              </button>
+              <button onclick="toggleBitSwitch(3)" id="bitSwitch3" class="p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 flex flex-col items-center gap-1 transition active:scale-95">
+                <span class="text-xs font-bold text-slate-400">Peso 1 (2&sup0;)</span>
+                <span id="bitVal3" class="text-3xl sm:text-4xl font-mono font-extrabold text-slate-400">0</span>
+                <span class="text-[11px] font-semibold text-slate-400" id="bitState3">APAGADO</span>
+              </button>
+            </div>
+
+            <!-- Fórmula viva -->
+            <div class="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 text-center font-mono text-sm text-slate-700 dark:text-slate-300">
+              Suma de pesos: <strong id="bitSumFormula" class="text-indigo-600 dark:text-indigo-400">0 + 0 + 0 + 0 = 0</strong>
+            </div>
+          </div>
+
+          <!-- Resultado grande Binario / Decimal / Hex -->
+          <div class="lg:col-span-5 grid grid-cols-3 gap-3">
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 text-center">
+              <span class="text-xs font-bold text-slate-400 uppercase block mb-1">Binario</span>
+              <span id="bitOutBin" class="text-xl sm:text-2xl font-mono font-extrabold text-slate-900 dark:text-white">0000</span>
+            </div>
+            <div class="p-4 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-center">
+              <span class="text-xs font-bold text-indigo-500 dark:text-indigo-300 uppercase block mb-1">Decimal</span>
+              <span id="bitOutDec" class="text-2xl sm:text-3xl font-mono font-extrabold text-indigo-700 dark:text-indigo-300">0</span>
+            </div>
+            <div class="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-center">
+              <span class="text-xs font-bold text-emerald-600 dark:text-emerald-300 uppercase block mb-1">Hex</span>
+              <span id="bitOutHex" class="text-2xl sm:text-3xl font-mono font-extrabold text-emerald-700 dark:text-emerald-300">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabla interactiva completa 0 al 15 -->
+        <div>
+          <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2">Haz clic en cualquier valor de la tabla para probarlo en los interruptores:</p>
+          <div id="table0to15" class="grid grid-cols-4 sm:grid-cols-8 gap-2">
+            <!-- Generado por JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN B: Generador ilimitado de ejercicios de examen -->
+      <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-sm space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Sección B &bull; Práctica ilimitada con pasos</span>
+            <h2 class="text-xl font-extrabold text-slate-900 dark:text-white">Generador de Ejercicios de Examen</h2>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold">
+            <span class="px-3 py-1.5 rounded-xl bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300">Aciertos: <span id="convHits">0</span></span>
+            <span class="px-3 py-1.5 rounded-xl bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-300">Racha: <span id="convStreak">0</span></span>
+          </div>
+        </div>
+
+        <!-- Selector de tipo de ejercicio -->
+        <div id="convModeButtons" class="flex flex-wrap gap-2">
+          <!-- Generado por JS -->
+        </div>
+
+        <!-- Caja del ejercicio actual -->
+        <div class="p-5 sm:p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-5">
+          <div class="space-y-1">
+            <span id="convPromptLabel" class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400"></span>
+            <div id="convPromptValue" class="text-2xl sm:text-3xl font-mono font-extrabold text-slate-900 dark:text-white break-all"></div>
+            <p id="convPromptHint" class="text-xs text-slate-500 dark:text-slate-400"></p>
+          </div>
+
+          <!-- Input estándar (1 campo) -->
+          <form id="convSingleForm" onsubmit="submitConversionExercise(event)" class="flex flex-col sm:flex-row gap-3">
+            <input id="convSingleInput" type="text" autocomplete="off" placeholder="Escribe tu resultado..." class="flex-1 px-4 py-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 font-mono text-base focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            <div class="flex gap-2">
+              <button type="submit" class="flex-1 sm:flex-none px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm transition">
+                Comprobar
+              </button>
+              <button type="button" onclick="generateConversionExercise()" class="px-4 py-3 rounded-xl bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 font-semibold text-sm transition">
+                Nuevo
+              </button>
+            </div>
+          </form>
+
+          <!-- Input especial para Redes IPv4 /24 (4 campos) -->
+          <form id="convIpv4Form" onsubmit="submitConversionExercise(event)" class="hidden space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Máscara de red</label>
+                <input id="ipv4MaskInput" type="text" placeholder="Ej: 255.255.255.0" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Dirección de red</label>
+                <input id="ipv4NetInput" type="text" placeholder="Ej: 192.168.1.0" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Dirección de Broadcast</label>
+                <input id="ipv4BcastInput" type="text" placeholder="Ej: 192.168.1.255" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Número de hosts utilizables</label>
+                <input id="ipv4HostsInput" type="text" placeholder="Ej: 254" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button type="submit" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm transition">
+                Comprobar los 4 datos
+              </button>
+              <button type="button" onclick="generateConversionExercise()" class="px-4 py-3 rounded-xl bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 font-semibold text-sm transition">
+                Otra IP /24
+              </button>
+            </div>
+          </form>
+
+          <!-- Resultado y explicación paso a paso -->
+          <div id="convFeedbackBox" class="hidden rounded-2xl p-4 sm:p-5 border space-y-3">
+            <div id="convFeedbackTitle" class="font-bold text-base"></div>
+            <div id="convFeedbackSteps" class="text-sm space-y-1.5 font-mono"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- PESTAÑA 5: ESQUEMAS VISUALES                              -->
+    <!-- ========================================================= -->
+    <section id="tab-esquemas" class="tab-panel hidden space-y-8">
+
+      <!-- ESQUEMA 1: ARQUITECTURA VON NEUMANN -->
+      <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-sm space-y-5">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Tema 1.1 &bull; Esquema interactivo</span>
+          <h2 class="text-xl font-extrabold text-slate-900 dark:text-white">Arquitectura Von Neumann</h2>
+          <p class="text-sm text-slate-500 dark:text-slate-400">Haz clic en cualquier bloque del esquema para consultar su definición corta de examen.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <!-- Diagrama clicable -->
+          <div class="lg:col-span-7 space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- Bloque CPU -->
+              <div onclick="selectVonNeumann('cpu')" data-vn="cpu" class="vn-box cursor-pointer p-4 rounded-2xl border-2 border-indigo-400 bg-indigo-50/70 dark:bg-indigo-950/40 space-y-3 transition hover:shadow-md">
+                <div class="flex items-center justify-between">
+                  <span class="font-extrabold text-indigo-800 dark:text-indigo-200">CPU (Procesador)</span>
+                  <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-indigo-200 dark:bg-indigo-800 text-indigo-900 dark:text-indigo-100">Unidad 1</span>
+                </div>
+                <div class="grid grid-cols-1 gap-2">
+                  <button type="button" onclick="event.stopPropagation(); selectVonNeumann('uc')" data-vn="uc" class="vn-box text-left p-3 rounded-xl bg-white dark:bg-slate-900 border border-indigo-200 dark:border-indigo-800 hover:border-indigo-500 transition">
+                    <span class="font-bold text-sm block text-slate-900 dark:text-white">Unidad de Control (UC)</span>
+                    <span class="text-xs text-slate-500 dark:text-slate-400">Coordina y lee instrucciones</span>
+                  </button>
+                  <button type="button" onclick="event.stopPropagation(); selectVonNeumann('alu')" data-vn="alu" class="vn-box text-left p-3 rounded-xl bg-white dark:bg-slate-900 border border-indigo-200 dark:border-indigo-800 hover:border-indigo-500 transition">
+                    <span class="font-bold text-sm block text-slate-900 dark:text-white">ALU (Aritmético-Lógica)</span>
+                    <span class="text-xs text-slate-500 dark:text-slate-400">Operaciones matemáticas y lógicas</span>
+                  </button>
+                  <button type="button" onclick="event.stopPropagation(); selectVonNeumann('registros')" data-vn="registros" class="vn-box text-left p-3 rounded-xl bg-white dark:bg-slate-900 border border-indigo-200 dark:border-indigo-800 hover:border-indigo-500 transition">
+                    <span class="font-bold text-sm block text-slate-900 dark:text-white">Registros</span>
+                    <span class="text-xs text-slate-500 dark:text-slate-400">Memoria interna ultrarrápida</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Columna derecha: Memoria Principal + E/S -->
+              <div class="flex flex-col gap-4">
+                <button type="button" onclick="selectVonNeumann('memoria')" data-vn="memoria" class="vn-box flex-1 text-left p-5 rounded-2xl border-2 border-emerald-300 dark:border-emerald-800 bg-emerald-50/70 dark:bg-emerald-950/30 hover:shadow-md transition flex flex-col justify-between">
+                  <div class="flex items-center justify-between w-full">
+                    <span class="font-extrabold text-emerald-900 dark:text-emerald-200">Memoria Principal (RAM)</span>
+                    <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-200 dark:bg-emerald-800 text-emerald-900 dark:text-emerald-100">Unidad 2</span>
+                  </div>
+                  <p class="text-xs text-emerald-800 dark:text-emerald-300 mt-2">Almacena juntos los <strong>datos</strong> y las <strong>instrucciones</strong> en uso.</p>
+                </button>
+
+                <button type="button" onclick="selectVonNeumann('es')" data-vn="es" class="vn-box flex-1 text-left p-5 rounded-2xl border-2 border-amber-300 dark:border-amber-800 bg-amber-50/70 dark:bg-amber-950/30 hover:shadow-md transition flex flex-col justify-between">
+                  <div class="flex items-center justify-between w-full">
+                    <span class="font-extrabold text-amber-900 dark:text-amber-200">Sistema de Entrada / Salida</span>
+                    <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-200 dark:bg-amber-800 text-amber-900 dark:text-amber-100">Unidad 3</span>
+                  </div>
+                  <p class="text-xs text-amber-800 dark:text-amber-300 mt-2">Comunica el ordenador con periféricos externos y memorias auxiliares.</p>
+                </button>
+              </div>
+            </div>
+
+            <!-- Buses del sistema -->
+            <button type="button" onclick="selectVonNeumann('buses')" data-vn="buses" class="vn-box w-full p-4 rounded-2xl border-2 border-sky-300 dark:border-sky-800 bg-sky-50/80 dark:bg-sky-950/40 hover:shadow-md transition flex flex-col sm:flex-row items-center justify-between gap-2">
+              <span class="font-extrabold text-sky-900 dark:text-sky-200 text-sm sm:text-base">&harr; Buses del Sistema &harr;</span>
+              <div class="flex flex-wrap justify-center gap-1.5 text-xs font-semibold">
+                <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800">Bus de Datos</span>
+                <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800">Bus de Direcciones</span>
+                <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800">Bus de Control</span>
+              </div>
+            </button>
+          </div>
+
+          <!-- Panel de detalle Von Neumann -->
+          <div class="lg:col-span-5 p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 space-y-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Definición para memorizar</span>
+            <h3 id="vnDetailTitle" class="text-xl font-bold text-slate-900 dark:text-white"></h3>
+            <p id="vnDetailText" class="text-sm sm:text-base text-slate-700 dark:text-slate-200 leading-relaxed"></p>
+            <div class="pt-2 border-t border-slate-200 dark:border-slate-700 text-xs text-slate-500 dark:text-slate-400">
+              Recuerda: en Von Neumann, los datos y las instrucciones viven juntos en la memoria principal y pasan al procesador para ejecutarse.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESQUEMA 2: 4 CAPAS DEL MODELO TCP/IP -->
+      <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-sm space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Tema 2.2 &bull; Esquema interactivo</span>
+            <h2 class="text-xl font-extrabold text-slate-900 dark:text-white">Las 4 Capas del Modelo TCP/IP</h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Haz clic en cada capa para ver su función, qué tipo de dirección usa y sus protocolos clave.</p>
+          </div>
+          <span class="self-start text-xs font-semibold px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+            OSI (7 capas, teórico) vs TCP/IP (4 capas, real)
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <!-- Pila de 4 capas -->
+          <div class="lg:col-span-6 space-y-2.5">
+            <button type="button" onclick="selectTcpLayer(1)" data-layer="1" class="tcp-layer-btn w-full text-left p-4 rounded-2xl border-2 transition flex items-center justify-between gap-3">
+              <div>
+                <span class="text-xs font-bold uppercase opacity-75">Capa 4 (Superior)</span>
+                <div class="text-base font-extrabold">1. Capa de Aplicación</div>
+              </div>
+              <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-white/80 dark:bg-slate-900/70">URLs</span>
+            </button>
+
+            <div class="text-center text-xs font-semibold text-slate-400">&darr; Encapsulamiento (añade cabecera) &nbsp;|&nbsp; &uarr; Desencapsulamiento</div>
+
+            <button type="button" onclick="selectTcpLayer(2)" data-layer="2" class="tcp-layer-btn w-full text-left p-4 rounded-2xl border-2 transition flex items-center justify-between gap-3">
+              <div>
+                <span class="text-xs font-bold uppercase opacity-75">Capa 3</span>
+                <div class="text-base font-extrabold">2. Capa de Transporte</div>
+              </div>
+              <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-white/80 dark:bg-slate-900/70">Puertos</span>
+            </button>
+
+            <button type="button" onclick="selectTcpLayer(3)" data-layer="3" class="tcp-layer-btn w-full text-left p-4 rounded-2xl border-2 transition flex items-center justify-between gap-3">
+              <div>
+                <span class="text-xs font-bold uppercase opacity-75">Capa 2</span>
+                <div class="text-base font-extrabold">3. Capa de Internet (Red)</div>
+              </div>
+              <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-white/80 dark:bg-slate-900/70">Direcciones IP</span>
+            </button>
+
+            <button type="button" onclick="selectTcpLayer(4)" data-layer="4" class="tcp-layer-btn w-full text-left p-4 rounded-2xl border-2 transition flex items-center justify-between gap-3">
+              <div>
+                <span class="text-xs font-bold uppercase opacity-75">Capa 1 (Inferior)</span>
+                <div class="text-base font-extrabold">4. Capa de Acceso a Red (Interfaz)</div>
+              </div>
+              <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-white/80 dark:bg-slate-900/70">Direcciones MAC</span>
+            </button>
+          </div>
+
+          <!-- Detalle de capa seleccionada -->
+          <div class="lg:col-span-6 p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h3 id="tcpLayerTitle" class="text-xl font-extrabold text-slate-900 dark:text-white"></h3>
+              <span id="tcpLayerAddress" class="text-xs font-bold px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-200"></span>
+            </div>
+            <p id="tcpLayerDesc" class="text-sm sm:text-base text-slate-700 dark:text-slate-200"></p>
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-2">Protocolos clave en esta capa:</span>
+              <div id="tcpLayerProtocols" class="space-y-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESQUEMA 3: TABLAS COMPARATIVAS RÁPIDAS -->
+      <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-sm space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Repaso rápido de diferencias</span>
+            <h2 class="text-xl font-extrabold text-slate-900 dark:text-white">Tablas Comparativas Clave</h2>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="switchCompTable('tcpudp')" data-comp="tcpudp" class="comp-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition">TCP vs UDP</button>
+            <button onclick="switchCompTable('httphttps')" data-comp="httphttps" class="comp-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition">HTTP vs HTTPS</button>
+            <button onclick="switchCompTable('httpmethods')" data-comp="httpmethods" class="comp-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition">Métodos y Códigos HTTP</button>
+          </div>
+        </div>
+
+        <!-- Tabla TCP vs UDP -->
+        <div id="comp-tcpudp" class="comp-panel overflow-x-auto">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead>
+              <tr class="border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/70">
+                <th class="p-3.5 font-bold text-slate-600 dark:text-slate-300 rounded-tl-xl">Característica</th>
+                <th class="p-3.5 font-bold text-indigo-700 dark:text-indigo-300">TCP</th>
+                <th class="p-3.5 font-bold text-emerald-700 dark:text-emerald-300 rounded-tr-xl">UDP</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+              <tr>
+                <td class="p-3.5 font-semibold">Conexión previa</td>
+                <td class="p-3.5">Orientado a conexión (establece conexión antes de enviar).</td>
+                <td class="p-3.5">Sin conexión previa.</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-semibold">Fiabilidad y orden</td>
+                <td class="p-3.5">Fiable: entrega en orden, usa confirmaciones (acuses de recibo) y retransmite si hay fallos.</td>
+                <td class="p-3.5">No fiable: no confirma, no ordena ni retransmite.</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-semibold">Velocidad y uso</td>
+                <td class="p-3.5">Ideal para páginas web y transferencia de archivos.</td>
+                <td class="p-3.5">Mucho más rápido y ligero; usado en DNS y aplicaciones en tiempo real.</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-semibold">Capa y direccionamiento</td>
+                <td class="p-3.5">Capa de Transporte (usa números de puerto).</td>
+                <td class="p-3.5">Capa de Transporte (usa números de puerto).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Tabla HTTP vs HTTPS -->
+        <div id="comp-httphttps" class="comp-panel hidden overflow-x-auto">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead>
+              <tr class="border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/70">
+                <th class="p-3.5 font-bold text-slate-600 dark:text-slate-300 rounded-tl-xl">Aspecto</th>
+                <th class="p-3.5 font-bold text-amber-700 dark:text-amber-300">HTTP (Sin cifrar)</th>
+                <th class="p-3.5 font-bold text-emerald-700 dark:text-emerald-300 rounded-tr-xl">HTTPS (Seguro)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+              <tr>
+                <td class="p-3.5 font-semibold">Puerto habitual</td>
+                <td class="p-3.5 font-mono">80 / TCP</td>
+                <td class="p-3.5 font-mono">443</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-semibold">Cifrado de datos</td>
+                <td class="p-3.5">Envía el contenido en texto legible; un intermediario puede leerlo o alterarlo.</td>
+                <td class="p-3.5">Protegido con <strong>TLS</strong>: cifra la comunicación para evitar que terceros lean o cambien el tráfico.</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-semibold">Identidad del servidor</td>
+                <td class="p-3.5">No verifica la identidad del servidor.</td>
+                <td class="p-3.5">Verifica la identidad del servidor mediante certificados digitales.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Tabla Métodos y Códigos HTTP -->
+        <div id="comp-httpmethods" class="comp-panel hidden grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+            <div class="bg-slate-50 dark:bg-slate-800/70 px-4 py-3 font-bold text-sm text-indigo-700 dark:text-indigo-300">Métodos HTTP (Los que pide el profesor)</div>
+            <div class="divide-y divide-slate-200 dark:divide-slate-800 text-sm">
+              <div class="p-3.5 flex items-start gap-3">
+                <span class="font-mono font-bold px-2 py-0.5 rounded bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-300 shrink-0">GET</span>
+                <span>Pide y recupera una página o datos del servidor sin modificar nada.</span>
+              </div>
+              <div class="p-3.5 flex items-start gap-3">
+                <span class="font-mono font-bold px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 shrink-0">POST</span>
+                <span>Envía datos al servidor (en el cuerpo de la petición) para procesarlos o crear un recurso nuevo.</span>
+              </div>
+              <div class="p-3.5 flex items-start gap-3">
+                <span class="font-mono font-bold px-2 py-0.5 rounded bg-rose-100 dark:bg-rose-900/50 text-rose-700 dark:text-rose-300 shrink-0">DELETE</span>
+                <span>Solicita al servidor que borre un recurso concreto.</span>
+              </div>
+              <div class="p-3.5 flex items-start gap-3">
+                <span class="font-mono font-bold px-2 py-0.5 rounded bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 shrink-0">OPTIONS</span>
+                <span>Pregunta al servidor qué opciones o métodos de comunicación permite (se usa también en CORS).</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+            <div class="bg-slate-50 dark:bg-slate-800/70 px-4 py-3 font-bold text-sm text-emerald-700 dark:text-emerald-300">Códigos de Estado HTTP</div>
+            <div class="divide-y divide-slate-200 dark:divide-slate-800 text-sm">
+              <div class="p-3.5 flex items-start gap-3">
+                <span class="font-mono font-bold px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 shrink-0">200 OK</span>
+                <span>Indica que el servidor ha atendido la petición correctamente.</span>
+              </div>
+              <div class="p-3.5 flex items-start gap-3">
+                <span class="font-mono font-bold px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 shrink-0">403 Forbidden</span>
+                <span>El servidor entiende la petición, pero prohíbe el acceso por falta de permisos.</span>
+              </div>
+              <div class="p-3.5 flex items-start gap-3">
+                <span class="font-mono font-bold px-2 py-0.5 rounded bg-rose-100 dark:bg-rose-900/50 text-rose-700 dark:text-rose-300 shrink-0">404 Not Found</span>
+                <span>El servidor no ha encontrado el recurso que se le ha pedido.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal personalizado para reiniciar progreso (sin usar confirm()) -->
+  <div id="resetModal" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 max-w-sm w-full p-6 shadow-2xl space-y-4">
+      <h3 class="text-lg font-bold text-slate-900 dark:text-white">¿Reiniciar tu progreso?</h3>
+      <p class="text-sm text-slate-600 dark:text-slate-400">Se desmarcarán todos los conceptos dominados y las flashcards completadas. Esta acción no se puede deshacer.</p>
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeResetModal()" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-sm font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 transition">Cancelar</button>
+        <button onclick="confirmResetProgress()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-sm font-semibold transition">Sí, reiniciar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pie de página -->
+  <footer class="border-t border-slate-200 dark:border-slate-800 py-5 mt-8 text-center text-xs text-slate-500 dark:text-slate-400">
+    Guía Interactiva de Estudio &bull; Sistemas Informáticos (1.º DAM) &bull; Tu progreso se guarda automáticamente en este navegador.
+  </footer>
+
+  <!-- ========================================================= -->
+  <!-- LÓGICA JAVASCRIPT COMPLETA Y AUTOCONTENIDA                -->
+  <!-- ========================================================= -->
+  <script>
+    // =========================================================================
+    // 1. DATOS COMPLETOS DEL TEMARIO (100% FIEL AL RESUMEN DEL USUARIO)
+    // =========================================================================
+    const TOPICS_DATA = [
+      {
+        id: '1.1',
+        group: 'tema1',
+        shortTitle: 'Tema 1.1',
+        title: 'Tema 1.1: Conceptos Básicos de Informática y Arquitectura',
+        badge: 'Tema 1 • 30-35%',
+        badgeColor: 'indigo',
+        subtopics: [
+          {
+            title: 'Conceptos iniciales',
+            concepts: [
+              { id: 'c11_1', term: 'Origen de "Informática"', def: 'Viene de unir las palabras información y automática. Se refiere al tratamiento automático de la información.' },
+              { id: 'c11_2', term: 'Sistema informático', def: 'Es un sistema que almacena y procesa información. Está formado por hardware, software y las personas que lo usan o programan.' },
+              { id: 'c11_3', term: 'Ordenador o computadora', def: 'Es una máquina eléctrica y electrónica que hace muchas operaciones con datos. Trabaja a gran velocidad y con mucha precisión.' },
+              { id: 'c11_4', term: 'Programa', def: 'Es un conjunto ordenado de instrucciones escritas en un lenguaje de programación que le dicen al ordenador qué hacer con los datos. Un compilador o intérprete traduce ese código a lenguaje máquina (ceros y unos) para que el procesador pueda ejecutarlo.' }
+            ]
+          },
+          {
+            title: 'Arquitectura Von Neumann (Muy importante)',
+            concepts: [
+              { id: 'c11_5', term: 'Qué es una computadora (Von Neumann)', def: 'Es una máquina que procesa datos de forma automática siguiendo instrucciones guardadas en su memoria. Los datos y las instrucciones viven juntos en la memoria principal y pasan al procesador para ejecutarse.' },
+              { id: 'c11_6', term: 'Las 3 unidades funcionales', def: 'Toda computadora se compone de la CPU (procesa instrucciones), la Memoria Principal (guarda datos e instrucciones en uso) y el Sistema de Entrada/Salida (comunica con los periféricos).' },
+              { id: 'c11_7', term: 'Unidad de Control (UC)', def: 'Dirige y coordina todo el flujo de datos dentro de la CPU. Saca las instrucciones de la memoria, las entiende y supervisa que se ejecuten.' },
+              { id: 'c11_8', term: 'Unidad Aritmético-Lógica (ALU)', def: 'Es el circuito que hace las operaciones matemáticas (sumas, restas) y lógicas (comparaciones). Siempre trabaja combinando los datos de dos en dos.' },
+              { id: 'c11_9', term: 'Registros', def: 'Son memorias muy pequeñas y rapidísimas dentro de la CPU. Guardan datos temporales mientras trabaja, como el Contador de Programa o el Acumulador.' },
+              { id: 'c11_10', term: 'Buses del sistema', def: 'Son los cables o líneas físicas que conectan las partes internas del ordenador. Se dividen en bus de datos, bus de direcciones y bus de control.' }
+            ]
+          },
+          {
+            title: 'Hardware, Software y Componentes Generales',
+            concepts: [
+              { id: 'c11_11', term: 'Hardware', def: 'Es la parte física y tangible del ordenador, como chips, cables y discos. Sin las instrucciones del software no sirve para nada.' },
+              { id: 'c11_12', term: 'Software', def: 'Es la parte lógica e intangible formada por programas e instrucciones. Necesita al hardware para poder ejecutarse.' },
+              { id: 'c11_13', term: 'Software de sistema', def: 'Son los programas que controlan directamente el hardware para facilitar su uso al resto de programas. Ejemplos son Windows, Linux, macOS y los controladores.' },
+              { id: 'c11_14', term: 'Software de aplicación', def: 'Son los programas creados para que el usuario haga tareas concretas. Ejemplos son navegadores web, procesadores de texto y bases de datos.' },
+              { id: 'c11_15', term: 'Firmware', def: 'Son instrucciones básicas grabadas de forma permanente en una memoria del hardware (como ROM o Flash). Controlan los circuitos básicos del equipo, como la BIOS o UEFI.' },
+              { id: 'c11_16', term: 'Componentes físicos generales de una computadora', def: 'Un ordenador se organiza en CPU (UC + ALU), memoria central (RAM), controladores, unidad de entrada/salida, buses del sistema y unidades periféricas (de E/S y memorias auxiliares).' }
+            ]
+          }
+        ],
+        questions: [
+          { id: 'q11_1', q: '¿Qué es un sistema informático y qué elementos lo forman?', a: 'Es un sistema que permite almacenar y procesar información. Está formado por el hardware, el software y las personas (usuarios, programadores y operadores).' },
+          { id: 'q11_2', q: '¿Cuáles son las tres unidades funcionales de la arquitectura Von Neumann y qué hace cada una?', a: 'Son la CPU (interpreta y ejecuta instrucciones), la Memoria Principal (almacena datos e instrucciones en uso) y el Sistema de Entrada/Salida (comunica con el exterior).' },
+          { id: 'q11_3', q: '¿Cuál es la diferencia entre la Unidad de Control (UC) y la ALU dentro de la CPU?', a: 'La UC coordina el flujo de datos y lee las instrucciones de la memoria para ejecutarlas. La ALU realiza las operaciones matemáticas y lógicas combinando los datos.' },
+          { id: 'q11_4', q: '¿Qué diferencia hay entre software de sistema, software de aplicación y firmware?', a: 'El de sistema gestiona el hardware (como Windows), el de aplicación sirve para tareas del usuario (como un navegador) y el firmware son instrucciones grabadas en el propio hardware (como la BIOS).' },
+          { id: 'q11_5', q: '¿Cómo llega un programa escrito por una persona a ejecutarse en el procesador?', a: 'Se escribe en un lenguaje de alto nivel y luego un compilador o intérprete lo traduce a lenguaje máquina (ceros y unos). Ese es el único idioma que el procesador entiende directamente.' }
+        ]
+      },
+      {
+        id: '1.2',
+        group: 'tema1',
+        shortTitle: 'Tema 1.2',
+        title: 'Tema 1.2: Codificación, Sistemas Numéricos y Medidas',
+        badge: 'CAE SEGURO',
+        badgeColor: 'rose',
+        subtopics: [
+          {
+            title: 'Codificación de la información',
+            concepts: [
+              { id: 'c12_1', term: 'Abstracción binaria', def: 'Los circuitos solo entienden dos estados eléctricos (con carga o sin carga). Por eso la información se representa con ceros (0) y unos (1).' },
+              { id: 'c12_2', term: 'ASCII estándar', def: 'Es un sistema de codificación que usa 7 u 8 bits para representar caracteres en inglés (hasta 256 combinaciones). Se quedó pequeño para usar idiomas de todo el mundo.' },
+              { id: 'c12_3', term: 'Unicode (UTF-8)', def: 'Es la evolución del ASCII y el estándar universal actual. Usa entre 1 y 4 bytes por carácter para representar casi todos los alfabetos y símbolos del planeta.' }
+            ]
+          },
+          {
+            title: 'Sistemas numéricos y conversiones (CAE SEGURO)',
+            concepts: [
+              { id: 'c12_4', term: 'Sistema Decimal (Base 10)', def: 'Usa los dígitos del 0 al 9. Es el sistema que usamos las personas a diario.' },
+              { id: 'c12_5', term: 'Sistema Binario (Base 2)', def: 'Usa solo los dígitos 0 y 1. Es el lenguaje nativo del hardware del ordenador.' },
+              { id: 'c12_6', term: 'Sistema Hexadecimal (Base 16)', def: 'Usa los números del 0 al 9 y las letras de la A (10) a la F (15). Sirve para escribir cadenas binarias largas de forma corta y fácil de leer (como direcciones MAC o IPv6).' },
+              { id: 'c12_7', term: 'Tabla obligatoria del 0 al 15 (pesos 8-4-2-1)', def: '0=0000(0), 1=0001(1), 2=0010(2), 3=0011(3), 4=0100(4), 5=0101(5), 6=0110(6), 7=0111(7), 8=1000(8), 9=1001(9), 10=1010(A), 11=1011(B), 12=1100(C), 13=1101(D), 14=1110(E), 15=1111(F).' },
+              { id: 'c12_8', term: 'Convertir de Decimal a Binario o Hexadecimal', def: 'Se divide el número decimal entre la nueva base (2 o 16) de forma repetida hasta no poder más. El resultado se forma leyendo los restos al revés (del último al primero).' },
+              { id: 'c12_9', term: 'Convertir de Binario o Hexadecimal a Decimal', def: 'Se multiplica cada dígito por su base elevada a su posición (empezando desde 0 por la derecha) y se suma todo. Por ejemplo: 101 en binario = (1×2²) + (0×2¹) + (1×2⁰) = 4 + 0 + 1 = 5.' },
+              { id: 'c12_10', term: 'Convertir directo entre Binario y Hexadecimal', def: 'Como 2⁴ = 16, cada dígito hexadecimal equivale exactamente a un grupo de 4 bits. Se separa el binario en grupos de 4 desde la derecha y se cambia cada grupo por su valor hexadecimal (ej. 1110 0101 = E5).' }
+            ]
+          },
+          {
+            title: 'Medidas de la información',
+            concepts: [
+              { id: 'c12_11', term: 'Bit (b)', def: 'Es la unidad mínima de información. Solo puede valer 0 o 1.' },
+              { id: 'c12_12', term: 'Byte (B)', def: 'Es un grupo de 8 bits. Permite guardar un carácter de texto.' },
+              { id: 'c12_13', term: 'Escala de múltiplos (grupos de 1024)', def: 'A partir del Byte, cada unidad equivale a 1024 de la anterior: 1 KB = 1024 B, 1 MB = 1024 KB, 1 GB = 1024 MB, 1 TB = 1024 GB, 1 PB = 1024 TB y 1 EB = 1024 PB.' }
+            ]
+          }
+        ],
+        questions: [
+          { id: 'q12_1', q: '¿Por qué evolucionó la codificación de caracteres de ASCII a UTF-8?', a: 'ASCII solo usa 7 u 8 bits y sirve principalmente para el inglés. UTF-8 usa de 1 a 4 bytes y permite representar casi todos los idiomas y símbolos del mundo.' },
+          { id: 'q12_2', q: '¿Para qué se usa el sistema hexadecimal en informática?', a: 'Sirve para representar cadenas muy largas de ceros y unos de una forma más corta y fácil de leer para las personas. Cada dígito hexadecimal resume exactamente 4 bits.' },
+          { id: 'q12_3', q: '¿Cómo se pasa el número binario 10101 a decimal?', a: 'Se suman los pesos de las posiciones que tienen un 1 desde la derecha (16, 8, 4, 2, 1). Así: 16 + 4 + 1 = 21.' },
+          { id: 'q12_4', q: '¿Cómo se convierte el número hexadecimal A9 a binario?', a: 'Se traduce cada dígito a su bloque de 4 bits usando la tabla. La A (10) es 1010 y el 9 es 1001, así que el resultado es 10101001.' },
+          { id: 'q12_5', q: '¿Cuántos bits hay en 1 Byte y cuántos Megabytes hay en 1 Gigabyte según la escala binaria?', a: 'Un Byte está formado por 8 bits. En la escala binaria de clase, 1 Gigabyte equivale a 1024 Megabytes.' }
+        ]
+      },
+      {
+        id: '1.3',
+        group: 'tema1',
+        shortTitle: 'Tema 1.3',
+        title: 'Tema 1.3: Componentes de Hardware y Periféricos',
+        badge: 'Tema 1 • 30-35%',
+        badgeColor: 'indigo',
+        subtopics: [
+          {
+            title: 'Microprocesador (CPU)',
+            concepts: [
+              { id: 'c13_1', term: 'Qué es el procesador', def: 'Es un chip de silicio que realiza las funciones de la CPU. Los dos fabricantes principales son Intel y AMD.' },
+              { id: 'c13_2', term: 'Velocidad de reloj', def: 'Se mide en MHz (millones de ciclos por segundo) o GHz (mil millones de ciclos por segundo). Indica qué tan rápido ejecuta las instrucciones el procesador.' },
+              { id: 'c13_3', term: 'Núcleo (Core) y Multi-core', def: 'Un núcleo es una unidad de procesamiento independiente dentro del chip. Los procesadores multi-core tienen varios núcleos (2, 4, 8 o más) para hacer varias tareas a la vez.' },
+              { id: 'c13_4', term: 'Hilo (Thread)', def: 'Es una secuencia de instrucciones que puede ejecutar un núcleo. Algunos procesadores dividen cada núcleo físico en dos hilos lógicos para aprovechar mejor su trabajo.' },
+              { id: 'c13_5', term: 'Frecuencia base y frecuencia máxima', def: 'La frecuencia base es la velocidad normal a la que trabaja el procesador. La frecuencia máxima (turbo) es la velocidad pico que alcanza temporalmente cuando necesita más potencia.' },
+              { id: 'c13_6', term: 'Memoria caché', def: 'Es una memoria muy pequeña y ultrarrápida integrada dentro del procesador. Guarda los datos más usados para no perder tiempo buscándolos en la RAM.' }
+            ]
+          },
+          {
+            title: 'Memoria RAM',
+            concepts: [
+              { id: 'c13_7', term: 'Qué es la RAM', def: 'Es la memoria principal del ordenador donde se guardan los programas y datos que se están usando en ese momento. Es volátil, lo que significa que pierde todo su contenido cuando se apaga el equipo.' },
+              { id: 'c13_8', term: 'Módulos y capacidades', def: 'Viene en placas modulares llamadas DIMM (para ordenadores de sobremesa) y SODIMM (para portátiles). Sus capacidades aumentan en potencias de 2 (2 GB, 4 GB, 8 GB, 16 GB...).' },
+              { id: 'c13_9', term: 'Tecnología DDR', def: 'Es la tecnología actual de memoria RAM (Double Data Rate) y existe en varias generaciones (DDR, DDR2, DDR3, DDR4...). Cada placa base suele aceptar solo un tipo concreto.' },
+              { id: 'c13_10', term: 'Latencia', def: 'Es el tiempo de retraso desde que el procesador pide un dato a la RAM hasta que la memoria se lo entrega. Cuanto más baja es la latencia, más rápida responde la memoria.' }
+            ]
+          },
+          {
+            title: 'Placa base y Fuente de alimentación',
+            concepts: [
+              { id: 'c13_11', term: 'Placa base', def: 'Es el circuito impreso principal del ordenador donde se conectan todos los componentes. Incluye el zócalo (socket) para el procesador y las ranuras para la memoria RAM.' },
+              { id: 'c13_12', term: 'Fuente de alimentación', def: 'Transforma la corriente alterna (AC) del enchufe en corriente continua (DC). Reduce los 220 voltios a voltajes más bajos para el ordenador: 12 V (discos y gráficas), 5 V y 3,3 V (otros circuitos).' }
+            ]
+          },
+          {
+            title: 'Tarjeta gráfica y Puertos de vídeo',
+            concepts: [
+              { id: 'c13_13', term: 'Tarjeta gráfica', def: 'Funciona casi como un ordenador independiente dentro del PC para crear imágenes. Tiene su propio procesador (GPU) con disipador/ventilador y su propia memoria rápida (VRAM).' },
+              { id: 'c13_14', term: 'Píxel y Resolución', def: 'Un píxel es cada uno de los puntos pequeños que forman una imagen digital. La resolución es el número total de píxeles que la pantalla puede dibujar (por ejemplo, 1280 x 1024).' },
+              { id: 'c13_15', term: 'Puertos de vídeo', def: 'Son los conectores usados para enchufar monitores al ordenador. Los cuatro tipos principales que debes reconocer son VGA, DVI, HDMI y DisplayPort.' }
+            ]
+          },
+          {
+            title: 'Disco duro y Periféricos',
+            concepts: [
+              { id: 'c13_16', term: 'Disco duro', def: 'Es almacenamiento secundario y no volátil, por lo que guarda archivos de forma permanente aunque apagues el PC. Los discos duros tradicionales guardan los ceros y unos usando magnetismo con distintos sentidos o cargas.' },
+              { id: 'c13_17', term: 'Conector SATA', def: 'Es el cable y conector estándar actual para discos duros internos. Es más rápido y fino que el antiguo IDE, mejora el flujo de aire y conecta cada unidad con su propio cable.' },
+              { id: 'c13_18', term: 'Teclado (distribución)', def: 'La distribución de teclas más habitual es QWERTY. Existen otras distribuciones distintas, como Dvorak o AZERTY.' },
+              { id: 'c13_19', term: 'Impresoras (Inyección de tinta vs Láser)', def: 'Las de chorro de tinta (Inkjet) son más baratas de comprar pero su tinta y mantenimiento salen más caros. Las láser son más comunes en oficinas y empresas por su rapidez y eficiencia.' },
+              { id: 'c13_20', term: 'Funcionamiento de la impresora láser', def: 'Usa tóner (tinta en polvo) en vez de tinta líquida. Un láser con espejos y lentes dibuja la imagen en un cilindro magnético (drum) al que se pega el tóner, luego pasa al papel y un fusor la derrite para dejarla fija.' },
+              { id: 'c13_21', term: 'Plotter', def: 'Es una impresora especial diseñada para imprimir en papeles de gran tamaño (como planos).' }
+            ]
+          }
+        ],
+        questions: [
+          { id: 'q13_1', q: '¿Qué diferencia principal hay entre la memoria RAM y un disco duro?', a: 'La RAM es memoria principal y volátil, así que borra sus datos al apagar el equipo. El disco duro es almacenamiento secundario y no volátil, por lo que guarda los datos de forma permanente.' },
+          { id: 'q13_2', q: '¿Qué función tiene la fuente de alimentación y con qué voltajes trabaja dentro del PC?', a: 'Convierte la corriente alterna (AC) de 220 V en corriente continua (DC). Suministra principalmente 12 V, 5 V y 3,3 V a los distintos componentes.' },
+          { id: 'q13_3', q: 'Nombra los cuatro puertos de vídeo principales que puede tener un ordenador.', a: 'Los cuatro puertos de vídeo principales son VGA, DVI, HDMI y DisplayPort.' },
+          { id: 'q13_4', q: '¿Por qué se dice que la tarjeta gráfica es como un ordenador dentro del ordenador?', a: 'Porque tiene su propio procesador gráfico (GPU) y su propia memoria (VRAM) dedicada. Así procesa los gráficos sin sobrecargar al procesador principal.' },
+          { id: 'q13_5', q: 'Explica en 2 frases cómo imprime una impresora láser.', a: 'Usa un haz láser, espejos y un cilindro magnético para atraer tinta en polvo (tóner) y pasarla al papel. Después, un fusor calienta el tóner para fundirlo y dejarlo pegado al papel.' }
+        ]
+      },
+      {
+        id: '2.1',
+        group: 'tema2',
+        shortTitle: 'Tema 2.1',
+        title: 'Tema 2.1: Sistemas de Comunicación, Redes y Dispositivos',
+        badge: 'Tema 2 • 65-70%',
+        badgeColor: 'emerald',
+        subtopics: [
+          {
+            title: 'Sistemas de comunicación y Redes',
+            concepts: [
+              { id: 'c21_1', term: 'Sistema de comunicación', def: 'Es un conjunto de dispositivos conectados que permiten intercambiar información. Tiene 5 componentes: mensaje (información), emisor (envía), receptor (recibe), medio (físico por donde viaja) y protocolo (reglas de comunicación).' },
+              { id: 'c21_2', term: 'Red de ordenadores', def: 'Es un sistema que conecta varios equipos y periféricos para compartir recursos e información. Sus ventajas son ahorrar costes y facilitar el trabajo (compartir archivos, impresoras, Internet, correo y copias de seguridad).' },
+              { id: 'c21_3', term: 'Tipos de redes', def: 'Nos centramos en dos: LAN (red de área local, como una oficina o casa) e Internet (red global que une redes de todo el mundo).' }
+            ]
+          },
+          {
+            title: 'Arquitecturas de red',
+            concepts: [
+              { id: 'c21_4', term: 'Arquitectura Cliente-Servidor', def: 'Un ordenador potente llamado servidor ofrece recursos o servicios (web, correo, archivos) y los clientes se los piden usando un programa cliente. Si el servidor se apaga, el servicio deja de funcionar.' },
+              { id: 'c21_5', term: 'Arquitectura Peer to Peer (P2P)', def: 'Es una red de igual a igual sin servidor central donde cada equipo actúa como cliente y servidor a la vez. Si un equipo falla, los demás pueden seguir compartiendo recursos.' }
+            ]
+          },
+          {
+            title: 'Tarjetas, MAC y Medios de transmisión',
+            concepts: [
+              { id: 'c21_6', term: 'Tarjeta de red', def: 'Es la interfaz física (cableada o Wi-Fi) que conecta el ordenador a la red. Prepara los datos para enviarlos, recibe los que llegan y negocia con el otro equipo la velocidad y tamaño de los paquetes.' },
+              { id: 'c21_7', term: 'Dirección física o MAC', def: 'Es un identificador único de 48 bits (escrito en 6 bloques hexadecimales) que identifica a cada tarjeta de red. Una parte identifica al fabricante (asignada por el IEEE) y la otra al dispositivo concreto.' },
+              { id: 'c21_8', term: 'Tipos de transmisión según el sentido', def: 'Simplex va en un solo sentido; Semidúplex (half-duplex) va en ambos sentidos pero no a la vez; Dúplex integral (full-duplex) envía y recibe en ambos sentidos al mismo tiempo.' },
+              { id: 'c21_9', term: 'Medios guiados y no guiados', def: 'Los guiados usan un medio sólido como cables (cobre o fibra). Los no guiados transmiten por el aire usando ondas electromagnéticas (como Wi-Fi y Bluetooth) y les afectan las interferencias.' }
+            ]
+          },
+          {
+            title: 'Dispositivos de red, Topologías y Normas',
+            concepts: [
+              { id: 'c21_10', term: 'Switch (Conmutador)', def: 'Conecta varios equipos en una red local (LAN) y tiene muchas bocas o puertos. Lee la dirección MAC de destino y envía los datos únicamente al puerto del equipo al que van dirigidos.' },
+              { id: 'c21_11', term: 'Router (Encaminador)', def: 'Interconecta redes distintas (por ejemplo, tu LAN de casa con Internet) y decide el mejor camino para cada paquete. Tiene al menos dos direcciones IP (una interna y otra externa), desencapsula el paquete para leer la IP destino y cambia la MAC para enviarlo al siguiente salto.' },
+              { id: 'c21_12', term: 'Pasarela (Gateway)', def: 'Es un dispositivo (normalmente el router) que conecta redes con diferentes protocolos o sirve de puerta de salida hacia otras redes externas.' },
+              { id: 'c21_13', term: 'Cortafuegos (Firewall)', def: 'Es un filtro de seguridad (hardware o software) que revisa las conexiones para detectar y bloquear accesos no autorizados. Permite elegir qué direcciones pueden entrar o salir de la red.' },
+              { id: 'c21_14', term: 'Topología de red', def: 'Es la forma física en la que se colocan los equipos y los cables que los unen.' },
+              { id: 'c21_15', term: 'Topología en Estrella', def: 'Todos los equipos se conectan directamente a un switch central (es la base de Ethernet). Si falla un equipo no pasa nada, pero si falla el switch se cae toda la red.' },
+              { id: 'c21_16', term: 'Topología en Árbol', def: 'Es una variante jerárquica que nace al unir varias redes en estrella (por ejemplo, conectando varios switches o routers en una empresa grande).' },
+              { id: 'c21_17', term: 'Normas y regulación (IEEE y RFC)', def: 'Todo lo relacionado con redes y protocolos de Internet está estandarizado. Los estándares los definen principalmente el organismo IEEE y los documentos RFC (del IETF).' }
+            ]
+          }
+        ],
+        questions: [
+          { id: 'q21_1', q: '¿Qué diferencia hay entre una arquitectura Cliente-Servidor y una Peer to Peer (P2P)?', a: 'En Cliente-Servidor hay un equipo central potente que da servicios y si falla todo se detiene. En P2P todos los equipos actúan como cliente y servidor a la vez, y si uno falla el resto sigue funcionando.' },
+          { id: 'q21_2', q: '¿Qué es una dirección MAC y qué estructura tiene?', a: 'Es un identificador físico único de 48 bits (en formato hexadecimal) que tiene cada tarjeta de red. Una parte identifica al fabricante y la otra al dispositivo.' },
+          { id: 'q21_3', q: '¿Qué diferencia de función hay entre un Switch y un Router?', a: 'El switch conecta equipos dentro de una misma red local usando direcciones MAC. El router conecta redes diferentes entre sí (como una LAN e Internet) encaminando paquetes según sus direcciones IP.' },
+          { id: 'q21_4', q: '¿Qué significa que un medio de transmisión sea full-duplex frente a half-duplex?', a: 'En full-duplex los datos pueden viajar en ambos sentidos al mismo tiempo. En half-duplex también viajan en ambos sentidos, pero nunca de forma simultánea.' },
+          { id: 'q21_5', q: 'Explica qué es la topología en estrella y cuál es su punto débil.', a: 'Es una red donde todos los equipos se conectan a un switch central. Su punto débil es que si falla ese switch central, toda la red deja de funcionar.' }
+        ]
+      },
+      {
+        id: '2.2',
+        group: 'tema2',
+        shortTitle: 'Tema 2.2',
+        title: 'Tema 2.2: Modelo TCP/IP, Capas y Protocolos Habituales',
+        badge: 'Tema 2 • 65-70%',
+        badgeColor: 'emerald',
+        subtopics: [
+          {
+            title: 'Funcionamiento por capas',
+            concepts: [
+              { id: 'c22_1', term: 'Por qué se usan capas', def: 'Se aplica el principio de "divide y vencerás" para separar el problema de la comunicación en tareas pequeñas y ordenadas.' },
+              { id: 'c22_2', term: 'Comunicación real vs. virtual', def: 'Cada capa habla de forma real solo con la capa de arriba y la de abajo en el mismo equipo (solo la capa física envía señales reales por el medio). De forma virtual, parece que cada capa habla directamente con su capa gemela en el equipo destino.' },
+              { id: 'c22_3', term: 'Encapsulamiento', def: 'Al enviar datos, cada capa que baja añade su propia cabecera con información de control. Cuando el mensaje llega al destino, las capas van quitando esas cabeceras al subir (desencapsulamiento).' },
+              { id: 'c22_4', term: 'Múltiples instancias', def: 'Un equipo puede mantener varias conexiones del mismo protocolo a la vez (como varias pestañas web HTTP abiertas). Esto es posible gracias a los números de puerto.' },
+              { id: 'c22_5', term: 'Modelo OSI vs. Modelo TCP/IP', def: 'El modelo OSI tiene 7 capas, pero es un modelo teórico que no se llegó a implementar. El modelo TCP/IP tiene 4 capas y es el que se usa realmente en Internet.' }
+            ]
+          },
+          {
+            title: 'Las 4 capas de TCP/IP',
+            concepts: [
+              { id: 'c22_6', term: '1. Capa de Aplicación', def: 'Contiene los protocolos que usan los programas del usuario (HTTP, DNS, FTP, SMTP, SNMP). Usa direcciones específicas como las URL.' },
+              { id: 'c22_7', term: '2. Capa de Transporte', def: 'Comunica aplicaciones concretas entre equipos mediante puertos. Sus protocolos son TCP y UDP.' },
+              { id: 'c22_8', term: '3. Capa de Internet (Red)', def: 'Encamina los paquetes entre redes distintas usando direcciones IP. Sus protocolos son IP e ICMP.' },
+              { id: 'c22_9', term: '4. Capa de Acceso a red (Interfaz de red)', def: 'Transporta las tramas por el enlace local usando direcciones físicas (MAC). Incluye Ethernet, Wi-Fi y ARP.' }
+            ]
+          },
+          {
+            title: 'Protocolos habituales (Completos)',
+            concepts: [
+              { id: 'c22_10', term: 'Ethernet (Acceso a red)', def: 'Permite enviar tramas entre equipos conectados por cable en una red local. Usa direcciones MAC y suele funcionar en dúplex completo.' },
+              { id: 'c22_11', term: 'Wi-Fi (Acceso a red)', def: 'Permite conectar equipos a una red local sin cables mediante ondas de radio y un punto de acceso (AP). También usa tramas y direcciones MAC.' },
+              { id: 'c22_12', term: 'ARP (Frontera Acceso a red / Internet)', def: 'Averigua qué dirección MAC corresponde a una dirección IPv4 dentro de la misma red local. Envía una pregunta a toda la red y guarda las respuestas en una caché ARP temporal.' },
+              { id: 'c22_13', term: 'IP (Internet)', def: 'Proporciona direcciones lógicas y encamina paquetes entre redes diferentes. Es de "mejor esfuerzo", por lo que no garantiza entrega ni orden.' },
+              { id: 'c22_14', term: 'ICMP (Internet)', def: 'Envía mensajes de control, diagnóstico y errores de red IP (como eco o destino inalcanzable). Lo usan herramientas como ping y no utiliza puertos.' },
+              { id: 'c22_15', term: 'TCP (Transporte)', def: 'Es un protocolo fiable y orientado a conexión, ideal para webs y archivos. Entrega los datos en orden, usa confirmaciones (acuses de recibo), retransmite si hay fallos y usa puertos.' },
+              { id: 'c22_16', term: 'UDP (Transporte)', def: 'Es un protocolo sin conexión y no fiable (no confirma, no ordena ni retransmite). Es mucho más rápido y ligero, por lo que se usa en DNS y aplicaciones en tiempo real.' },
+              { id: 'c22_17', term: 'HTTP (Aplicación)', def: 'Permite que un navegador pida páginas, imágenes o datos a un servidor web mediante peticiones y respuestas. Usa normalmente el puerto 80 (y HTTPS el 443).' },
+              { id: 'c22_18', term: 'DNS (Aplicación)', def: 'Traduce nombres de dominio fáciles de recordar (como ejemplo.com) a direcciones IP. Funciona como una base de datos jerárquica con caché usando el puerto 53 (UDP/TCP).' }
+            ]
+          },
+          {
+            title: 'Protocolos de aplicación (Solo nombre y para qué sirven)',
+            concepts: [
+              { id: 'c22_19', term: 'FTP (File Transfer Protocol)', def: 'Sirve para subir, descargar y gestionar archivos entre un cliente y un servidor.' },
+              { id: 'c22_20', term: 'SMTP (Simple Mail Transfer Protocol)', def: 'Sirve para enviar y retransmitir mensajes de correo electrónico.' },
+              { id: 'c22_21', term: 'SNMP (Simple Network Management Protocol)', def: 'Sirve para supervisar y gestionar equipos de red (ver tráfico, estado y errores).' }
+            ]
+          }
+        ],
+        questions: [
+          { id: 'q22_1', q: '¿Cuáles son las 4 capas del modelo TCP/IP y qué tipo de dirección usa cada una?', a: 'Son Aplicación (URLs/direcciones específicas), Transporte (puertos), Internet (direcciones IP) y Acceso a red (direcciones físicas MAC).' },
+          { id: 'q22_2', q: '¿En qué consiste el principio de encapsulamiento en redes?', a: 'Al enviar datos, cada capa añade su propia cabecera al mensaje antes de pasarlo a la capa inferior. En el destino, cada capa quita su cabecera para recuperar los datos originales.' },
+          { id: 'q22_3', q: 'Escribe tres diferencias clave entre TCP y UDP.', a: 'TCP establece conexión previa, es fiable y reenvía los datos perdidos en orden con confirmaciones. UDP no establece conexión, no garantiza la entrega ni el orden, pero es mucho más rápido.' },
+          { id: 'q22_4', q: '¿Para qué sirve el protocolo ARP y cómo funciona?', a: 'Sirve para averiguar la dirección MAC de una IPv4 en la red local. Envía una petición a todos los equipos de la red, solo contesta el dueño de esa IP con su MAC y se guarda en la caché ARP.' },
+          { id: 'q22_5', q: '¿Para qué se utilizan los protocolos DNS, FTP y SMTP?', a: 'DNS traduce nombres de dominio a direcciones IP, FTP transfiere archivos entre cliente y servidor, y SMTP envía correos electrónicos.' }
+        ]
+      },
+      {
+        id: '2.3',
+        group: 'tema2',
+        shortTitle: 'Tema 2.3',
+        title: 'Tema 2.3: El Protocolo IP (IPv4, IPv6 y Comandos)',
+        badge: 'Tema 2 • 65-70%',
+        badgeColor: 'emerald',
+        subtopics: [
+          {
+            title: 'Qué es IP y Direccionamiento IPv4',
+            concepts: [
+              { id: 'c23_1', term: 'Función y características de IP', def: 'Identifica interfaces de red y encamina paquetes entre redes distintas en la capa de Internet. Es no orientado a conexión y de "mejor esfuerzo" (best effort), sin garantizar entrega ni orden.' },
+              { id: 'c23_2', term: 'Formato IPv4', def: 'Tiene 32 bits divididos en 4 números decimales separados por puntos (cada uno es un octeto de 8 bits, de 0 a 255), como 192.168.1.34. Identifica una interfaz de red, no siempre un equipo entero (un router tiene varias).' },
+              { id: 'c23_3', term: 'Máscara de red y prefijo CIDR', def: 'Indican qué parte de la IP identifica a la red y qué parte al equipo (host). Por ejemplo, la máscara 255.255.255.0 equivale a /24, lo que significa 24 bits para la red y 8 bits para los hosts.' },
+              { id: 'c23_4', term: 'Dirección de red, broadcast y hosts', def: 'En una red /24 como 192.168.1.0/24, la primera dirección (192.168.1.0) es la dirección de red y la última (192.168.1.255) es el broadcast (para todos). Quedan 2⁸ - 2 = 254 direcciones libres para equipos (de .1 a .254).' }
+            ]
+          },
+          {
+            title: 'Encaminamiento, IPs Públicas/Privadas, NAT y Puertos',
+            concepts: [
+              { id: 'c23_5', term: 'Cómo llega un paquete a otra red', def: 'El equipo compara la IP destino con su red; si está en otra red, lo envía a su puerta de enlace (gateway), que es el router. Luego cada router consulta su tabla de rutas para elegir el siguiente salto.' },
+              { id: 'c23_6', term: 'DHCP', def: 'Es el servicio (habitual en el router) que entrega automáticamente a cada equipo su dirección IP, máscara, puerta de enlace y servidores DNS.' },
+              { id: 'c23_7', term: 'IP Pública vs. IP Privada', def: 'Las IP públicas sirven para navegar y comunicarse globalmente por Internet. Las IP privadas se usan solo en redes internas (LAN), no salen directamente a Internet y pueden repetirse en distintas casas o empresas (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16).' },
+              { id: 'c23_8', term: 'Dirección de Loopback (127.0.0.1)', def: 'Es la dirección especial reservada para que el ordenador se comunique consigo mismo (localhost).' },
+              { id: 'c23_9', term: 'NAT y PAT', def: 'NAT traduce direcciones IP privadas a una IP pública para salir a Internet. PAT (usado en routers de casa) permite que varios dispositivos compartan la misma IP pública diferenciándolos por su número de puerto.' },
+              { id: 'c23_10', term: 'IP frente a Puerto', def: 'La IP identifica la interfaz del equipo en la red, mientras que el puerto (del 0 al 65.535) identifica el servicio o aplicación concreta. Los puertos pertenecen a la capa de transporte (TCP/UDP), nunca a la cabecera IP.' }
+            ]
+          },
+          {
+            title: 'IPv6 y Comandos prácticos',
+            concepts: [
+              { id: 'c23_11', term: 'Por qué surge IPv6', def: 'Nace para ampliar enormemente el número de direcciones disponibles frente al límite de IPv4 y simplificar la cabecera.' },
+              { id: 'c23_12', term: 'Formato de IPv6', def: 'Tiene 128 bits escritos en 8 grupos de 4 dígitos hexadecimales separados por dos puntos (ej. 2001:0db8:0000:0000:0000:0000:0000:0025).' },
+              { id: 'c23_13', term: 'Reglas de abreviación IPv6', def: 'Se pueden quitar los ceros a la izquierda de cada grupo (0db8 pasa a db8). Además, varios grupos seguidos de solo ceros se pueden sustituir por ::, pero esto solo puede usarse una vez por dirección (ej. 2001:db8::25).' },
+              { id: 'c23_14', term: 'Comando ipconfig (Windows) / ifconfig (Linux y macOS)', def: 'Muestra la configuración de red actual del equipo. Permite ver las direcciones IP, la máscara, la puerta de enlace y los servidores DNS.' },
+              { id: 'c23_15', term: 'Comando ping', def: 'Sirve para comprobar si hay conexión con otra dirección IP enviando mensajes ICMP. También mide el tiempo de respuesta y si se pierden paquetes.' }
+            ]
+          }
+        ],
+        questions: [
+          { id: 'q23_1', q: 'Dada la IP 192.168.1.34/24, indica su máscara, dirección de red, broadcast y cuántos hosts admite.', a: 'Su máscara es 255.255.255.0, la dirección de red es 192.168.1.0 y el broadcast es 192.168.1.255. Admite 254 hosts utilizables (del 192.168.1.1 al 192.168.1.254).' },
+          { id: 'q23_2', q: '¿Cómo pueden salir a Internet a la vez varios equipos de una casa con IP privada usando una sola IP pública?', a: 'Gracias al router y a la técnica NAT/PAT. El router traduce las IP privadas a su IP pública y usa distintos números de puerto para saber a qué equipo devolver cada respuesta.' },
+          { id: 'q23_3', q: '¿A qué capa pertenecen los números de puerto y en qué se diferencian de una dirección IP?', a: 'Los puertos pertenecen a la capa de transporte (TCP y UDP), no a IP. La IP identifica al equipo en la red y el puerto identifica la aplicación o servicio concreto dentro de ese equipo.' },
+          { id: 'q23_4', q: '¿Cuántos bits tiene una dirección IPv6 y cómo se abrevia 2001:0db8:0000:0000:0000:0000:0000:0025?', a: 'IPv6 tiene 128 bits escritos en hexadecimal. Quitando los ceros iniciales y cambiando los grupos seguidos de ceros por ::, queda como 2001:db8::25.' },
+          { id: 'q23_5', q: '¿Para qué sirven los comandos ipconfig y ping?', a: 'ipconfig (o ifconfig) muestra la configuración de red del equipo, como su IP, máscara y puerta de enlace. ping usa ICMP para comprobar si un destino responde y medir el tiempo de conexión.' }
+        ]
+      },
+      {
+        id: '2.4',
+        group: 'tema2',
+        shortTitle: 'Tema 2.4',
+        title: 'Tema 2.4: El Protocolo HTTP y HTTPS',
+        badge: 'Tema 2 • 65-70%',
+        badgeColor: 'emerald',
+        subtopics: [
+          {
+            title: 'Qué es HTTP y cómo funciona',
+            concepts: [
+              { id: 'c24_1', term: 'Qué es HTTP', def: 'Es el protocolo de la capa de aplicación usado para pedir y recibir recursos web (como páginas HTML, imágenes o datos JSON). Funciona bajo el modelo cliente-servidor mediante peticiones (request) y respuestas (response).' },
+              { id: 'c24_2', term: 'Características fundamentales', def: 'Intercambia mensajes petición-respuesta, es sin estado (stateless) (cada petición va por separado), es extensible y se puede cifrar usando HTTPS.' },
+              { id: 'c24_3', term: 'Cómo carga una página web', def: 'El navegador lee la URL, busca la IP del servidor usando DNS, se conecta al servidor y envía una petición HTTP (ej. GET). El servidor devuelve un código de estado, cabeceras y el contenido, y el navegador pide los archivos extra (CSS, imágenes, scripts).' }
+            ]
+          },
+          {
+            title: 'Métodos HTTP y Códigos de estado (Los que pide el profesor)',
+            concepts: [
+              { id: 'c24_4', term: 'GET', def: 'Pide y recupera una página o datos del servidor sin modificar nada.' },
+              { id: 'c24_5', term: 'POST', def: 'Envía datos al servidor (en el cuerpo de la petición) para procesarlos o crear un recurso nuevo.' },
+              { id: 'c24_6', term: 'DELETE', def: 'Solicita al servidor que borre un recurso concreto.' },
+              { id: 'c24_7', term: 'OPTIONS', def: 'Pregunta al servidor qué opciones o métodos de comunicación permite (se usa también en CORS).' },
+              { id: 'c24_8', term: 'Código 200 OK', def: 'Indica que el servidor ha atendido la petición correctamente.' },
+              { id: 'c24_9', term: 'Código 403 Forbidden', def: 'El servidor entiende la petición, pero prohíbe el acceso por falta de permisos.' },
+              { id: 'c24_10', term: 'Código 404 Not Found', def: 'El servidor no ha encontrado el recurso que se le ha pedido.' }
+            ]
+          },
+          {
+            title: 'HTTP frente a HTTPS',
+            concepts: [
+              { id: 'c24_11', term: 'HTTP (sin cifrar)', def: 'Viaja normalmente por el puerto 80/TCP y envía el contenido en texto legible. Cualquier intermediario con acceso al tráfico podría leer o alterar los datos.' },
+              { id: 'c24_12', term: 'HTTPS (seguro)', def: 'Es HTTP protegido con TLS y usa habitualmente el puerto 443. Cifra la comunicación para evitar que terceros lean o cambien el tráfico y verifica la identidad del servidor con certificados digitales.' }
+            ]
+          }
+        ],
+        questions: [
+          { id: 'q24_1', q: '¿Qué es el protocolo HTTP y a qué capa de TCP/IP pertenece?', a: 'Es un protocolo de la capa de aplicación basado en el modelo cliente-servidor. Sirve para pedir y transferir recursos web (HTML, imágenes o JSON) mediante peticiones y respuestas.' },
+          { id: 'q24_2', q: '¿Qué ocurre paso a paso desde que escribes una URL hasta que ves la página web?', a: 'El navegador consulta el DNS para obtener la IP del servidor, establece la conexión y envía una petición HTTP (como GET). El servidor responde con el código de estado y el contenido, y el navegador pide los recursos extra como imágenes o CSS.' },
+          { id: 'q24_3', q: 'Explica para qué sirven los métodos HTTP GET, POST y DELETE.', a: 'GET consulta y recupera datos del servidor, POST envía datos para procesarlos o crear recursos y DELETE solicita eliminar un recurso.' },
+          { id: 'q24_4', q: '¿Qué significan los códigos de estado HTTP 200, 403 y 404?', a: '200 significa que la petición salió bien, 403 indica que el acceso está prohibido por falta de permisos y 404 significa que el recurso pedido no se encontró.' },
+          { id: 'q24_5', q: '¿Qué aporta HTTPS respecto a HTTP?', a: 'HTTPS añade la capa de seguridad TLS sobre HTTP (puerto 443) para cifrar los datos durante el transporte. Así evita que terceros lean o modifiquen la información y autentica al servidor con certificados digitales.' }
+        ]
+      }
+    ];
+
+    // Lista plana de todos los conceptos y todas las 35 preguntas
+    const ALL_CONCEPTS = TOPICS_DATA.flatMap(t =>
+      t.subtopics.flatMap(s => s.concepts.map(c => ({ ...c, topicId: t.id, topicTitle: t.shortTitle, subtopicTitle: s.title })))
+    );
+    const ALL_QUESTIONS = TOPICS_DATA.flatMap(t =>
+      t.questions.map(q => ({ ...q, topicId: t.id, group: t.group, topicTitle: t.shortTitle }))
+    );
+
+    // =========================================================================
+    // 2. ESTADO GLOBAL Y PERSISTENCIA EN LOCALSTORAGE
+    // =========================================================================
+    const STORAGE_KEY = 'guia_si_1dam_state_v1';
+
+    let appState = {
+      masteredConcepts: [],
+      masteredFlashcards: [],
+      theme: null
+    };
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          appState.masteredConcepts = Array.isArray(parsed.masteredConcepts) ? parsed.masteredConcepts : [];
+          appState.masteredFlashcards = Array.isArray(parsed.masteredFlashcards) ? parsed.masteredFlashcards : [];
+          appState.theme = parsed.theme || null;
+        }
+      } catch (err) {
+        console.error('Error cargando estado:', err);
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+      } catch (err) {
+        console.error('Error guardando estado:', err);
+      }
+    }
+
+    // Toast no intrusivo (nunca alert)
+    function showToast(msg, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const div = document.createElement('div');
+      const colors = {
+        info: 'bg-slate-900 dark:bg-slate-800 text-white border-slate-700',
+        success: 'bg-emerald-600 text-white border-emerald-500',
+        warn: 'bg-amber-600 text-white border-amber-500'
+      };
+      div.className = `pointer-events-auto px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold shadow-lg transition-all duration-300 ${colors[type] || colors.info}`;
+      div.textContent = msg;
+      container.appendChild(div);
+      setTimeout(() => {
+        div.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => div.remove(), 300);
+      }, 2400);
+    }
+
+    // =========================================================================
+    // 3. MODO CLARO / OSCURO Y NAVEGACIÓN PRINCIPAL
+    // =========================================================================
+    function applyTheme() {
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDark = appState.theme ? appState.theme === 'dark' : prefersDark;
+      document.documentElement.classList.toggle('dark', isDark);
+
+      document.querySelectorAll('.theme-icon-sun').forEach(el => el.classList.toggle('hidden', !isDark));
+      document.querySelectorAll('.theme-icon-moon').forEach(el => el.classList.toggle('hidden', isDark));
+    }
+
+    function toggleTheme() {
+      const isCurrentlyDark = document.documentElement.classList.contains('dark');
+      appState.theme = isCurrentlyDark ? 'light' : 'dark';
+      saveState();
+      applyTheme();
+    }
+
+    let currentMainTab = 'apuntes';
+
+    function switchMainTab(tabId) {
+      currentMainTab = tabId;
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+      const target = document.getElementById(`tab-${tabId}`);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('.main-tab-btn').forEach(btn => {
+        const active = btn.dataset.tab === tabId;
+        btn.classList.toggle('border-indigo-600', active);
+        btn.classList.toggle('text-indigo-600', active);
+        btn.classList.toggle('dark:text-indigo-400', active);
+        btn.classList.toggle('bg-indigo-50/70', active);
+        btn.classList.toggle('dark:bg-indigo-950/40', active);
+
+        btn.classList.toggle('border-transparent', !active);
+        btn.classList.toggle('text-slate-600', !active);
+        btn.classList.toggle('dark:text-slate-400', !active);
+      });
+    }
+
+    function updateGlobalProgress() {
+      const total = ALL_CONCEPTS.length;
+      const done = appState.masteredConcepts.length;
+      const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+      document.getElementById('globalProgressText').textContent = `${pct}% (${done}/${total})`;
+      document.getElementById('globalProgressBar').style.width = `${pct}%`;
+      renderTopicNav();
+    }
+
+    function openResetModal() {
+      document.getElementById('resetModal').classList.remove('hidden');
+    }
+    function closeResetModal() {
+      document.getElementById('resetModal').classList.add('hidden');
+    }
+    function confirmResetProgress() {
+      appState.masteredConcepts = [];
+      appState.masteredFlashcards = [];
+      saveState();
+      updateGlobalProgress();
+      renderNotesContent();
+      updateFlashcardMasteredBadge();
+      renderFlashcard();
+      closeResetModal();
+      showToast('Progreso reiniciado correctamente', 'info');
+    }
+
+    // =========================================================================
+    // 4. PESTAÑA 1: APUNTES INTERACTIVOS
+    // =========================================================================
+    let selectedTopicId = '1.1';
+    let notesSearchQuery = '';
+    let activeRecallMode = false;
+    let revealedIds = new Set();
+
+    function renderTopicNav() {
+      const container = document.getElementById('topicNavList');
+      container.innerHTML = TOPICS_DATA.map(t => {
+        const topicConceptIds = t.subtopics.flatMap(s => s.concepts.map(c => c.id));
+        const masteredCount = topicConceptIds.filter(id => appState.masteredConcepts.includes(id)).length;
+        const isActive = t.id === selectedTopicId && !notesSearchQuery;
+
+        let badgeCls = 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300';
+        if (t.badgeColor === 'rose') badgeCls = 'bg-rose-100 text-rose-700 dark:bg-rose-900/50 dark:text-rose-300';
+        if (t.badgeColor === 'emerald') badgeCls = 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300';
+
+        return `
+          <button onclick="selectTopic('${t.id}')" class="shrink-0 lg:shrink w-56 lg:w-full text-left p-3 rounded-xl border transition ${
+            isActive
+              ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-950/60 shadow-sm'
+              : 'border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/60'
+          }">
+            <div class="flex items-center justify-between gap-1.5 mb-1">
+              <span class="text-xs font-extrabold ${isActive ? 'text-indigo-700 dark:text-indigo-300' : 'text-slate-700 dark:text-slate-200'}">${t.shortTitle}</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${badgeCls}">${t.badge}</span>
+            </div>
+            <div class="text-xs text-slate-600 dark:text-slate-400 line-clamp-1 font-medium">${t.title.replace(/^Tema \d\.\d:\s*/, '')}</div>
+            <div class="mt-2 flex items-center gap-2">
+              <div class="flex-1 h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-emerald-500 rounded-full transition-all" style="width: ${Math.round((masteredCount / topicConceptIds.length) * 100)}%"></div>
+              </div>
+              <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400">${masteredCount}/${topicConceptIds.length}</span>
+            </div>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectTopic(topicId) {
+      selectedTopicId = topicId;
+      if (notesSearchQuery) {
+        notesSearchQuery = '';
+        document.getElementById('notesSearchInput').value = '';
+        document.getElementById('clearSearchBtn').classList.add('hidden');
+      }
+      renderTopicNav();
+      renderNotesContent();
+    }
+
+    function handleNotesSearch(val) {
+      notesSearchQuery = val.trim().toLowerCase();
+      document.getElementById('clearSearchBtn').classList.toggle('hidden', !notesSearchQuery);
+      renderTopicNav();
+      renderNotesContent();
+    }
+
+    function clearNotesSearch() {
+      notesSearchQuery = '';
+      document.getElementById('notesSearchInput').value = '';
+      document.getElementById('clearSearchBtn').classList.add('hidden');
+      renderTopicNav();
+      renderNotesContent();
+    }
+
+    function toggleActiveRecall() {
+      activeRecallMode = !activeRecallMode;
+      revealedIds.clear();
+      const btn = document.getElementById('activeRecallBtn');
+      const label = document.getElementById('activeRecallBtnLabel');
+      const banner = document.getElementById('activeRecallBanner');
+
+      if (activeRecallMode) {
+        btn.className = 'shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold border transition flex items-center justify-center gap-2 bg-indigo-600 text-white border-indigo-600 hover:bg-indigo-700 shadow-sm';
+        label.textContent = 'Modo Autoevaluación: ACTIVO';
+        banner.classList.remove('hidden');
+      } else {
+        btn.className = 'shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold border transition flex items-center justify-center gap-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/30';
+        label.textContent = 'Modo Autoevaluación (Ocultar)';
+        banner.classList.add('hidden');
+      }
+      renderNotesContent();
+    }
+
+    function toggleConceptReveal(conceptId) {
+      if (!activeRecallMode) return;
+      if (revealedIds.has(conceptId)) {
+        revealedIds.delete(conceptId);
+      } else {
+        revealedIds.add(conceptId);
+      }
+      const el = document.getElementById(`def-${conceptId}`);
+      if (el) {
+        const blurred = !revealedIds.has(conceptId);
+        el.classList.toggle('blur-sm', blurred);
+        el.classList.toggle('select-none', blurred);
+      }
+      const hint = document.getElementById(`hint-${conceptId}`);
+      if (hint) {
+        hint.textContent = revealedIds.has(conceptId) ? 'Clic para volver a ocultar' : 'Clic para revelar definición';
+      }
+    }
+
+    function toggleMasteredConcept(conceptId, event) {
+      if (event) event.stopPropagation();
+      const idx = appState.masteredConcepts.indexOf(conceptId);
+      if (idx >= 0) {
+        appState.masteredConcepts.splice(idx, 1);
+      } else {
+        appState.masteredConcepts.push(conceptId);
+      }
+      saveState();
+      updateGlobalProgress();
+      renderNotesContent();
+    }
+
+    function renderConceptCard(c, showTopicTag = false) {
+      const isMastered = appState.masteredConcepts.includes(c.id);
+      const isBlurred = activeRecallMode && !revealedIds.has(c.id);
+
+      return `
+        <article onclick="toggleConceptReveal('${c.id}')" class="rounded-2xl border p-4 sm:p-5 transition ${
+          activeRecallMode ? 'cursor-pointer' : ''
+        } ${
+          isMastered
+            ? 'bg-emerald-50/70 dark:bg-emerald-950/25 border-emerald-300 dark:border-emerald-800/70'
+            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-700'
+        }">
+          <div class="flex items-start justify-between gap-3">
+            <div class="space-y-1">
+              ${showTopicTag ? `<span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 mb-1">${c.topicTitle} &bull; ${c.subtopicTitle}</span>` : ''}
+              <h4 class="font-bold text-slate-900 dark:text-white text-sm sm:text-base">${c.term}</h4>
+            </div>
+            <button type="button" onclick="toggleMasteredConcept('${c.id}', event)" class="shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold border transition flex items-center gap-1.5 ${
+              isMastered
+                ? 'bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700'
+                : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-emerald-500 hover:text-emerald-600'
+            }">
+              <span>${isMastered ? '&#10003; Dominado' : 'Dominado'}</span>
+            </button>
+          </div>
+          <p id="def-${c.id}" class="mt-2.5 text-sm text-slate-700 dark:text-slate-300 leading-relaxed transition duration-200 ${isBlurred ? 'blur-sm select-none' : ''}">
+            ${c.def}
+          </p>
+          ${activeRecallMode ? `<div id="hint-${c.id}" class="mt-2 text-[11px] font-semibold text-indigo-500 dark:text-indigo-400">${isBlurred ? 'Clic para revelar definición' : 'Clic para volver a ocultar'}</div>` : ''}
+        </article>
+      `;
+    }
+
+    function toggleExamQuestionAnswer(qId) {
+      const box = document.getElementById(`ans-${qId}`);
+      const btn = document.getElementById(`ansbtn-${qId}`);
+      if (!box || !btn) return;
+      const isHidden = box.classList.contains('hidden');
+      box.classList.toggle('hidden', !isHidden);
+      btn.textContent = isHidden ? 'Ocultar respuesta' : 'Ver respuesta perfecta';
+    }
+
+    function renderNotesContent() {
+      const container = document.getElementById('notesContent');
+
+      // Modo búsqueda global
+      if (notesSearchQuery) {
+        const matches = ALL_CONCEPTS.filter(c =>
+          c.term.toLowerCase().includes(notesSearchQuery) ||
+          c.def.toLowerCase().includes(notesSearchQuery) ||
+          c.subtopicTitle.toLowerCase().includes(notesSearchQuery)
+        );
+
+        if (matches.length === 0) {
+          container.innerHTML = `
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 text-center space-y-2">
+              <p class="font-bold text-slate-800 dark:text-slate-200">No se encontraron conceptos para "${notesSearchQuery}"</p>
+              <p class="text-sm text-slate-500">Prueba con otra palabra clave como RAM, DNS, IPv6, NAT o HTTP.</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = `
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-slate-600 dark:text-slate-300">Resultados de búsqueda (${matches.length} conceptos)</h3>
+            <button onclick="clearNotesSearch()" class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">Ver tema actual</button>
+          </div>
+          <div class="grid grid-cols-1 gap-3">
+            ${matches.map(c => renderConceptCard(c, true)).join('')}
+          </div>
+        `;
+        return;
+      }
+
+      // Modo tema seleccionado
+      const topic = TOPICS_DATA.find(t => t.id === selectedTopicId) || TOPICS_DATA[0];
+
+      let html = `
+        <div class="bg-gradient-to-r from-indigo-600 to-blue-600 dark:from-indigo-900 dark:to-slate-900 text-white rounded-2xl p-5 sm:p-6 shadow-md">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/20">${topic.badge}</span>
+            ${topic.id === '1.2' ? `<button onclick="switchMainTab('conversiones')" class="text-xs font-bold px-3 py-1 rounded-full bg-rose-500 hover:bg-rose-400 text-white transition">Practicar conversiones &rarr;</button>` : ''}
+          </div>
+          <h2 class="text-xl sm:text-2xl font-extrabold mt-2">${topic.title}</h2>
+        </div>
+      `;
+
+      topic.subtopics.forEach(sub => {
+        html += `
+          <div class="space-y-3">
+            <h3 class="text-base font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2 px-1">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              <span>${sub.title}</span>
+            </h3>
+            <div class="grid grid-cols-1 gap-3">
+              ${sub.concepts.map(c => renderConceptCard(c, false)).join('')}
+            </div>
+          </div>
+        `;
+      });
+
+      // Sección desplegable de Posibles preguntas de examen
+      html += `
+        <details class="group bg-white dark:bg-slate-900 rounded-2xl border-2 border-indigo-200 dark:border-indigo-900/70 shadow-sm overflow-hidden">
+          <summary class="cursor-pointer list-none p-5 flex items-center justify-between gap-3 bg-indigo-50/60 dark:bg-indigo-950/30 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Repaso final del tema</span>
+              <h3 class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white">Posibles preguntas de examen (5 preguntas)</h3>
+            </div>
+            <span class="w-8 h-8 rounded-xl bg-white dark:bg-slate-800 border border-indigo-200 dark:border-indigo-800 flex items-center justify-center text-indigo-600 dark:text-indigo-300 transition-transform group-open:rotate-180">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </span>
+          </summary>
+
+          <div class="p-5 space-y-4 divide-y divide-slate-200 dark:divide-slate-800">
+            ${topic.questions.map((item, idx) => `
+              <div class="${idx > 0 ? 'pt-4' : ''} space-y-2.5">
+                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                  <p class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                    <span class="text-indigo-600 dark:text-indigo-400 mr-1">${idx + 1}.</span> ${item.q}
+                  </p>
+                  <button id="ansbtn-${item.id}" type="button" onclick="toggleExamQuestionAnswer('${item.id}')" class="shrink-0 self-start px-3.5 py-1.5 rounded-xl bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-200 hover:bg-indigo-200 dark:hover:bg-indigo-800 text-xs font-bold transition">
+                    Ver respuesta perfecta
+                  </button>
+                </div>
+                <div id="ans-${item.id}" class="hidden p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-sm text-emerald-950 dark:text-emerald-100 leading-relaxed">
+                  ${item.a}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </details>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    // =========================================================================
+    // 5. PESTAÑA 2: TARJETAS (FLASHCARDS 3D)
+    // =========================================================================
+    let fcDeck = [...ALL_QUESTIONS];
+    let fcIndex = 0;
+    let fcFlipped = false;
+
+    function changeFlashcardFilter(filterVal) {
+      if (filterVal === 'all') {
+        fcDeck = [...ALL_QUESTIONS];
+      } else if (filterVal === 'tema1' || filterVal === 'tema2') {
+        fcDeck = ALL_QUESTIONS.filter(q => q.group === filterVal);
+      } else {
+        fcDeck = ALL_QUESTIONS.filter(q => q.topicId === filterVal);
+      }
+      fcIndex = 0;
+      fcFlipped = false;
+      renderFlashcard();
+    }
+
+    function shuffleFlashcards() {
+      for (let i = fcDeck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [fcDeck[i], fcDeck[j]] = [fcDeck[j], fcDeck[i]];
+      }
+      fcIndex = 0;
+      fcFlipped = false;
+      renderFlashcard();
+      showToast('Tarjetas barajadas', 'info');
+    }
+
+    function flipFlashcard() {
+      fcFlipped = !fcFlipped;
+      document.getElementById('flashcardInner').classList.toggle('rotate-y-180', fcFlipped);
+    }
+
+    function renderFlashcard() {
+      if (!fcDeck.length) return;
+      const card = fcDeck[fcIndex];
+      const inner = document.getElementById('flashcardInner');
+      inner.classList.toggle('rotate-y-180', fcFlipped);
+
+      document.getElementById('fcTopicBadge').textContent = card.topicTitle;
+      document.getElementById('fcCounter').textContent = `Tarjeta ${fcIndex + 1} de ${fcDeck.length}`;
+      document.getElementById('fcCounterBack').textContent = `${fcIndex + 1} / ${fcDeck.length}`;
+      document.getElementById('fcQuestionText').textContent = card.q;
+      document.getElementById('fcAnswerText').textContent = card.a;
+
+      const isKnown = appState.masteredFlashcards.includes(card.id);
+      const statusEl = document.getElementById('fcStatusTag');
+      if (isKnown) {
+        statusEl.textContent = '✓ Ya la dominas';
+        statusEl.className = 'font-bold text-emerald-600 dark:text-emerald-400';
+      } else {
+        statusEl.textContent = 'Pendiente de repasar';
+        statusEl.className = 'font-medium text-slate-400';
+      }
+      updateFlashcardMasteredBadge();
+    }
+
+    function updateFlashcardMasteredBadge() {
+      const done = appState.masteredFlashcards.length;
+      document.getElementById('fcMasteredBadge').textContent = `Dominadas: ${done} / ${ALL_QUESTIONS.length}`;
+    }
+
+    function nextFlashcard() {
+      fcFlipped = false;
+      fcIndex = (fcIndex + 1) % fcDeck.length;
+      renderFlashcard();
+    }
+
+    function prevFlashcard() {
+      fcFlipped = false;
+      fcIndex = (fcIndex - 1 + fcDeck.length) % fcDeck.length;
+      renderFlashcard();
+    }
+
+    function markFlashcardKnown() {
+      const card = fcDeck[fcIndex];
+      if (!appState.masteredFlashcards.includes(card.id)) {
+        appState.masteredFlashcards.push(card.id);
+        saveState();
+      }
+      showToast('¡Genial! Marcada como dominada', 'success');
+      nextFlashcard();
+    }
+
+    function markFlashcardReview() {
+      const card = fcDeck[fcIndex];
+      const idx = appState.masteredFlashcards.indexOf(card.id);
+      if (idx >= 0) {
+        appState.masteredFlashcards.splice(idx, 1);
+        saveState();
+      }
+      // Mueve esta tarjeta al final del mazo para volver a practicarla pronto
+      if (fcDeck.length > 1) {
+        fcDeck.splice(fcIndex, 1);
+        fcDeck.push(card);
+        if (fcIndex >= fcDeck.length) fcIndex = 0;
+      }
+      fcFlipped = false;
+      showToast('Guardada para repasar al final', 'warn');
+      renderFlashcard();
+    }
+
+    // Atajo de teclado Espacio en pestaña Flashcards
+    document.addEventListener('keydown', (e) => {
+      if (currentMainTab !== 'flashcards') return;
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+      if (e.code === 'Space') {
+        e.preventDefault();
+        flipFlashcard();
+      } else if (e.code === 'ArrowRight') {
+        nextFlashcard();
+      } else if (e.code === 'ArrowLeft') {
+        prevFlashcard();
+      }
+    });
+
+    // =========================================================================
+    // 6. PESTAÑA 3: SIMULACRO ESCRITO
+    // =========================================================================
+    let simQuestions = [];
+    let simIndex = 0;
+    let simResults = [];
+
+    function shuffleCopy(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function startSimulation(mode) {
+      const t1 = shuffleCopy(ALL_QUESTIONS.filter(q => q.group === 'tema1'));
+      const t2 = shuffleCopy(ALL_QUESTIONS.filter(q => q.group === 'tema2'));
+
+      let label = '';
+      if (mode === 'oficial') {
+        // 35% Tema 1 (3 o 4 preguntas) y 65% Tema 2 (7 o 6 preguntas)
+        const countT1 = Math.random() < 0.5 ? 3 : 4;
+        const countT2 = 10 - countT1;
+        simQuestions = shuffleCopy([...t1.slice(0, countT1), ...t2.slice(0, countT2)]);
+        label = `Simulacro Oficial (${countT1} T1 / ${countT2} T2)`;
+      } else if (mode === 'tema1') {
+        simQuestions = t1.slice(0, 10);
+        label = 'Solo Tema 1 (10 preguntas)';
+      } else {
+        simQuestions = t2.slice(0, 10);
+        label = 'Solo Tema 2 (10 preguntas)';
+      }
+
+      simIndex = 0;
+      simResults = [];
+      document.getElementById('simModeLabel').textContent = label;
+      document.getElementById('simStartView').classList.add('hidden');
+      document.getElementById('simResultView').classList.add('hidden');
+      document.getElementById('simActiveView').classList.remove('hidden');
+      renderSimulationQuestion();
+    }
+
+    function cancelSimulation() {
+      document.getElementById('simActiveView').classList.add('hidden');
+      document.getElementById('simResultView').classList.add('hidden');
+      document.getElementById('simStartView').classList.remove('hidden');
+    }
+
+    function renderSimulationQuestion() {
+      const current = simQuestions[simIndex];
+      document.getElementById('simProgressLabel').textContent = `Pregunta ${simIndex + 1} de ${simQuestions.length}`;
+      document.getElementById('simQuestionTopic').textContent = current.topicTitle;
+      document.getElementById('simQuestionText').textContent = current.q;
+
+      const textarea = document.getElementById('simAnswerTextarea');
+      textarea.value = '';
+      document.getElementById('simInputPhase').classList.remove('hidden');
+      document.getElementById('simComparePhase').classList.add('hidden');
+      setTimeout(() => textarea.focus(), 50);
+    }
+
+    function checkSimulationAnswer() {
+      const current = simQuestions[simIndex];
+      const userText = document.getElementById('simAnswerTextarea').value.trim();
+
+      document.getElementById('simUserAnswerDisplay').textContent = userText || '(En blanco — no escribiste respuesta)';
+      document.getElementById('simPerfectAnswerDisplay').textContent = current.a;
+
+      document.getElementById('simInputPhase').classList.add('hidden');
+      document.getElementById('simComparePhase').classList.remove('hidden');
+    }
+
+    function gradeSimulationAnswer(points) {
+      const current = simQuestions[simIndex];
+      const userText = document.getElementById('simAnswerTextarea').value.trim();
+
+      simResults.push({
+        question: current,
+        userAnswer: userText || '(En blanco)',
+        points
+      });
+
+      simIndex++;
+      if (simIndex < simQuestions.length) {
+        renderSimulationQuestion();
+      } else {
+        showSimulationResults();
+      }
+    }
+
+    function showSimulationResults() {
+      document.getElementById('simActiveView').classList.add('hidden');
+      document.getElementById('simResultView').classList.remove('hidden');
+
+      const totalPoints = simResults.reduce((acc, r) => acc + r.points, 0);
+      const scoreOver10 = (totalPoints / simResults.length) * 10;
+      document.getElementById('simFinalScore').textContent = scoreOver10.toFixed(1);
+
+      let feedback = '';
+      if (scoreOver10 >= 9) feedback = '¡Sobresaliente! Llevas el temario súper claro y listo para bordar el examen.';
+      else if (scoreOver10 >= 7) feedback = '¡Muy bien! Tienes muy buena base. Repasa las preguntas falladas o parciales para asegurar el sobresaliente.';
+      else if (scoreOver10 >= 5) feedback = '¡Aprobado! Vas por buen camino, dedica un repaso rápido a las preguntas marcadas abajo.';
+      else feedback = 'Aún falta afianzar conceptos. Usa las Flashcards y el Modo Autoevaluación y vuelve a intentarlo.';
+
+      document.getElementById('simFinalFeedback').textContent = feedback;
+
+      const toReview = simResults.filter(r => r.points < 1);
+      const listEl = document.getElementById('simReviewList');
+
+      if (toReview.length === 0) {
+        listEl.innerHTML = `<div class="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-200 text-sm font-semibold">¡Pleno! No tienes ninguna pregunta pendiente de repasar en este simulacro.</div>`;
+        return;
+      }
+
+      listEl.innerHTML = simResults.map((r, i) => {
+        const badge = r.points === 1
+          ? '<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300">Correcta (1 pt)</span>'
+          : r.points === 0.5
+            ? '<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300">Parcial (0.5 pt)</span>'
+            : '<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300">Repasar (0 pt)</span>';
+
+        return `
+          <div class="p-4 rounded-2xl border ${r.points < 1 ? 'border-amber-200 dark:border-amber-800/70 bg-amber-50/40 dark:bg-amber-950/20' : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40'} space-y-2">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="text-xs font-bold text-slate-500">${r.question.topicTitle} &bull; Pregunta ${i + 1}</span>
+              ${badge}
+            </div>
+            <p class="font-bold text-sm text-slate-900 dark:text-white">${r.question.q}</p>
+            <p class="text-xs text-slate-600 dark:text-slate-400"><strong>Tu respuesta:</strong> ${r.userAnswer}</p>
+            <p class="text-xs text-emerald-800 dark:text-emerald-300"><strong>Respuesta perfecta:</strong> ${r.question.a}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // =========================================================================
+    // 7. PESTAÑA 4: PRÁCTICA CONVERSIONES (CAE SEGURO)
+    // =========================================================================
+    // --- Sección A: Interruptores de 4 bits ---
+    let bitSwitches = [0, 0, 0, 0];
+    const bitWeights = [8, 4, 2, 1];
+
+    function toggleBitSwitch(idx) {
+      bitSwitches[idx] = bitSwitches[idx] === 1 ? 0 : 1;
+      renderBitSwitches();
+    }
+
+    function setBitSwitchesFromNumber(num) {
+      const binStr = num.toString(2).padStart(4, '0');
+      bitSwitches = binStr.split('').map(Number);
+      renderBitSwitches();
+    }
+
+    function resetBitSwitches() {
+      bitSwitches = [0, 0, 0, 0];
+      renderBitSwitches();
+    }
+
+    function renderBitSwitches() {
+      let sum = 0;
+      const terms = [];
+      for (let i = 0; i < 4; i++) {
+        const on = bitSwitches[i] === 1;
+        const val = on ? bitWeights[i] : 0;
+        sum += val;
+        terms.push(val);
+
+        const btn = document.getElementById(`bitSwitch${i}`);
+        const valEl = document.getElementById(`bitVal${i}`);
+        const stateEl = document.getElementById(`bitState${i}`);
+
+        valEl.textContent = on ? '1' : '0';
+        stateEl.textContent = on ? 'ENCENDIDO' : 'APAGADO';
+
+        if (on) {
+          btn.className = 'p-4 rounded-2xl border-2 border-indigo-500 bg-indigo-600 text-white shadow-md shadow-indigo-500/20 flex flex-col items-center gap-1 transition active:scale-95';
+          valEl.className = 'text-3xl sm:text-4xl font-mono font-extrabold text-white';
+          stateEl.className = 'text-[11px] font-bold text-indigo-100';
+        } else {
+          btn.className = 'p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 flex flex-col items-center gap-1 transition active:scale-95';
+          valEl.className = 'text-3xl sm:text-4xl font-mono font-extrabold text-slate-400';
+          stateEl.className = 'text-[11px] font-semibold text-slate-400';
+        }
+      }
+
+      const binStr = bitSwitches.join('');
+      const hexStr = sum.toString(16).toUpperCase();
+      document.getElementById('bitSumFormula').textContent = `${terms.join(' + ')} = ${sum}`;
+      document.getElementById('bitOutBin').textContent = binStr;
+      document.getElementById('bitOutDec').textContent = sum;
+      document.getElementById('bitOutHex').textContent = hexStr;
+
+      renderTable0to15(sum);
+    }
+
+    function renderTable0to15(activeNum) {
+      const grid = document.getElementById('table0to15');
+      let html = '';
+      for (let n = 0; n <= 15; n++) {
+        const bin = n.toString(2).padStart(4, '0');
+        const hex = n.toString(16).toUpperCase();
+        const isActive = n === activeNum;
+        html += `
+          <button type="button" onclick="setBitSwitchesFromNumber(${n})" class="p-2 rounded-xl border text-center transition ${
+            isActive
+              ? 'border-indigo-500 bg-indigo-600 text-white shadow-sm'
+              : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/70 hover:border-indigo-400'
+          }">
+            <div class="text-xs font-extrabold">${n} <span class="opacity-70">(${hex})</span></div>
+            <div class="font-mono text-[11px] mt-0.5 ${isActive ? 'text-indigo-100' : 'text-slate-500 dark:text-slate-400'}">${bin}</div>
+          </button>
+        `;
+      }
+      grid.innerHTML = html;
+    }
+
+    // --- Sección B: Generador ilimitado de ejercicios ---
+    const CONV_MODES = [
+      { id: 'dec2bin', label: 'Decimal → Binario' },
+      { id: 'dec2hex', label: 'Decimal → Hexadecimal' },
+      { id: 'bin2dec', label: 'Binario → Decimal' },
+      { id: 'hex2dec', label: 'Hexadecimal → Decimal' },
+      { id: 'binhex', label: 'Binario ↔ Hex (4 bits)' },
+      { id: 'ipv6', label: 'Abreviación IPv6' },
+      { id: 'ipv4', label: 'Redes IPv4 /24' }
+    ];
+
+    let currentConvMode = 'dec2bin';
+    let currentExercise = null;
+    let convHits = 0;
+    let convStreak = 0;
+
+    function renderConvModeButtons() {
+      const container = document.getElementById('convModeButtons');
+      container.innerHTML = CONV_MODES.map(m => {
+        const active = m.id === currentConvMode;
+        return `
+          <button type="button" onclick="setConvMode('${m.id}')" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border transition ${
+            active
+              ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
+              : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-indigo-400'
+          }">
+            ${m.label}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function setConvMode(modeId) {
+      currentConvMode = modeId;
+      renderConvModeButtons();
+      generateConversionExercise();
+    }
+
+    function randInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    // Genera una dirección IPv6 completa con un único bloque más largo de ceros (sin ambigüedad)
+    function generateIPv6Exercise() {
+      const zeroRunLen = randInt(2, 4);
+      const zeroStart = randInt(2, 7 - zeroRunLen); // evita empezar en 0 o terminar en 7 para que se vea muy claro
+      const groups = [];
+      const hexChars = '0123456789abcdef';
+      const randHex = (len) => Array.from({ length: len }, () => hexChars[randInt(0, 15)]).join('');
+
+      for (let i = 0; i < 8; i++) {
+        if (i >= zeroStart && i < zeroStart + zeroRunLen) {
+          groups.push('0000');
+        } else if (i === 0) {
+          groups.push('2001');
+        } else if (i === 1) {
+          groups.push('0db8');
+        } else {
+          // Generar grupos con ceros a la izquierda para practicar esa regla
+          const style = randInt(0, 2);
+          if (style === 0) groups.push('00' + hexChars[randInt(1, 15)] + randHex(1));
+          else if (style === 1) groups.push('0' + hexChars[randInt(1, 15)] + randHex(2));
+          else groups.push('000' + hexChars[randInt(1, 15)]);
+        }
+      }
+
+      const fullAddr = groups.join(':');
+      // Paso 1: quitar ceros a la izquierda
+      const noLeading = groups.map(g => g.replace(/^0+/, '') || '0');
+      // Paso 2: sustituir el bloque consecutivo de ceros por ::
+      const leftPart = noLeading.slice(0, zeroStart).join(':');
+      const rightPart = noLeading.slice(zeroStart + zeroRunLen).join(':');
+      const compressed = `${leftPart}::${rightPart}`;
+
+      return {
+        fullAddr,
+        noLeadingStr: noLeading.join(':'),
+        compressed,
+        zeroRunLen
+      };
+    }
+
+    function generateConversionExercise() {
+      const feedback = document.getElementById('convFeedbackBox');
+      feedback.classList.add('hidden');
+
+      const singleForm = document.getElementById('convSingleForm');
+      const ipv4Form = document.getElementById('convIpv4Form');
+      const singleInput = document.getElementById('convSingleInput');
+
+      if (currentConvMode === 'ipv4') {
+        singleForm.classList.add('hidden');
+        ipv4Form.classList.remove('hidden');
+        ['ipv4MaskInput', 'ipv4NetInput', 'ipv4BcastInput', 'ipv4HostsInput'].forEach(id => {
+          document.getElementById(id).value = '';
+        });
+
+        const baseChoice = randInt(0, 2);
+        let o1, o2, o3;
+        if (baseChoice === 0) { o1 = 192; o2 = 168; o3 = randInt(1, 50); }
+        else if (baseChoice === 1) { o1 = 10; o2 = randInt(0, 20); o3 = randInt(1, 100); }
+        else { o1 = 172; o2 = randInt(16, 31); o3 = randInt(1, 40); }
+        const o4 = randInt(2, 250);
+
+        const ipCidr = `${o1}.${o2}.${o3}.${o4}/24`;
+        const net = `${o1}.${o2}.${o3}.0`;
+        const bcast = `${o1}.${o2}.${o3}.255`;
+        const firstHost = `${o1}.${o2}.${o3}.1`;
+        const lastHost = `${o1}.${o2}.${o3}.254`;
+
+        currentExercise = {
+          type: 'ipv4',
+          promptLabel: 'Analiza la siguiente red IPv4 con prefijo /24:',
+          promptValue: ipCidr,
+          promptHint: 'Completa la máscara, dirección de red, broadcast y cuántos hosts utilizables admite.',
+          expected: { mask: '255.255.255.0', net, bcast, hosts: '254' },
+          steps: [
+            `1. Prefijo /24 significa 24 bits para la red (3 primeros octetos) → Máscara: 255.255.255.0`,
+            `2. Dirección de red (último octeto a 0): ${net}`,
+            `3. Dirección de broadcast (último octeto a 255): ${bcast}`,
+            `4. Hosts utilizables: 2⁸ - 2 = 256 - 2 = 254 (del ${firstHost} al ${lastHost})`
+          ]
+        };
+      } else {
+        singleForm.classList.remove('hidden');
+        ipv4Form.classList.add('hidden');
+        singleInput.value = '';
+
+        if (currentConvMode === 'dec2bin') {
+          const n = randInt(18, 240);
+          const ans = n.toString(2);
+          const divSteps = [];
+          let tmp = n;
+          while (tmp > 0) {
+            const q = Math.floor(tmp / 2);
+            const r = tmp % 2;
+            divSteps.push(`${tmp} ÷ 2 = ${q} (resto ${r})`);
+            tmp = q;
+          }
+          divSteps.push(`Leyendo los restos al revés (del último al primero) → ${ans}`);
+          currentExercise = {
+            type: 'single',
+            promptLabel: 'Convierte de Decimal (base 10) a Binario (base 2):',
+            promptValue: `${n} (decimal)`,
+            promptHint: 'Divide entre 2 repetidamente y lee los restos de abajo arriba.',
+            expected: ans,
+            steps: divSteps
+          };
+        } else if (currentConvMode === 'dec2hex') {
+          const n = randInt(35, 1500);
+          const ans = n.toString(16).toUpperCase();
+          const divSteps = [];
+          let tmp = n;
+          while (tmp > 0) {
+            const q = Math.floor(tmp / 16);
+            const r = tmp % 16;
+            const hexR = r.toString(16).toUpperCase();
+            divSteps.push(`${tmp} ÷ 16 = ${q} (resto ${r}${r >= 10 ? ' = ' + hexR : ''})`);
+            tmp = q;
+          }
+          divSteps.push(`Leyendo los restos al revés → ${ans}`);
+          currentExercise = {
+            type: 'single',
+            promptLabel: 'Convierte de Decimal (base 10) a Hexadecimal (base 16):',
+            promptValue: `${n} (decimal)`,
+            promptHint: 'Divide entre 16 y recuerda: 10=A, 11=B, 12=C, 13=D, 14=E, 15=F.',
+            expected: ans,
+            steps: divSteps
+          };
+        } else if (currentConvMode === 'bin2dec') {
+          const n = randInt(13, 127);
+          const bin = n.toString(2);
+          const bits = bin.split('').reverse();
+          const expr = [];
+          const vals = [];
+          bits.forEach((b, pos) => {
+            const weight = Math.pow(2, pos);
+            expr.unshift(`(${b}×2^${pos})`);
+            if (b === '1') vals.unshift(weight);
+          });
+          currentExercise = {
+            type: 'single',
+            promptLabel: 'Convierte de Binario (base 2) a Decimal (base 10):',
+            promptValue: `${bin} (binario)`,
+            promptHint: 'Multiplica cada bit por su peso (1, 2, 4, 8, 16, 32, 64...) empezando por la derecha.',
+            expected: String(n),
+            steps: [
+              `Posiciones desde la derecha (base 2): ${expr.join(' + ')}`,
+              `Sumamos solo los pesos con un 1: ${vals.join(' + ')} = ${n}`
+            ]
+          };
+        } else if (currentConvMode === 'hex2dec') {
+          const n = randInt(26, 510);
+          const hex = n.toString(16).toUpperCase();
+          const digits = hex.split('').reverse();
+          const expr = [];
+          const partials = [];
+          digits.forEach((d, pos) => {
+            const val = parseInt(d, 16);
+            const prod = val * Math.pow(16, pos);
+            expr.unshift(`(${d}[${val}] × 16^${pos})`);
+            partials.unshift(prod);
+          });
+          currentExercise = {
+            type: 'single',
+            promptLabel: 'Convierte de Hexadecimal (base 16) a Decimal (base 10):',
+            promptValue: `${hex} (hexadecimal)`,
+            promptHint: 'Multiplica cada dígito por 16 elevado a su posición (empezando en 0 por la derecha).',
+            expected: String(n),
+            steps: [
+              `Teorema Fundamental de la Numeración: ${expr.join(' + ')}`,
+              `Suma final: ${partials.join(' + ')} = ${n}`
+            ]
+          };
+        } else if (currentConvMode === 'binhex') {
+          const dir = Math.random() < 0.5 ? 'b2h' : 'h2b';
+          const n = randInt(25, 255);
+          const hex = n.toString(16).toUpperCase().padStart(2, '0');
+          const bin8 = n.toString(2).padStart(8, '0');
+          const g1 = bin8.slice(0, 4);
+          const g2 = bin8.slice(4, 8);
+
+          if (dir === 'b2h') {
+            currentExercise = {
+              type: 'single',
+              promptLabel: 'Convierte directo de Binario a Hexadecimal (grupos de 4 bits):',
+              promptValue: `${g1} ${g2} (binario)`,
+              promptHint: 'Separa en bloques de 4 bits desde la derecha y traduce cada bloque usando la tabla 8-4-2-1.',
+              expected: hex.replace(/^0+(?=[0-9A-F])/, ''),
+              altExpected: hex,
+              steps: [
+                `Bloque izquierdo: ${g1} → ${parseInt(g1, 2)} = ${hex[0]}`,
+                `Bloque derecho: ${g2} → ${parseInt(g2, 2)} = ${hex[1]}`,
+                `Resultado hexadecimal: ${hex}`
+              ]
+            };
+          } else {
+            currentExercise = {
+              type: 'single',
+              promptLabel: 'Convierte directo de Hexadecimal a Binario (grupos de 4 bits):',
+              promptValue: `${hex} (hexadecimal)`,
+              promptHint: 'Traduce cada dígito hexadecimal a su bloque exacto de 4 bits (puedes escribirlo junto o con espacio).',
+              expected: bin8,
+              altExpected: bin8.replace(/^0+/, ''),
+              steps: [
+                `Dígito ${hex[0]} (${parseInt(hex[0], 16)}) → ${g1}`,
+                `Dígito ${hex[1]} (${parseInt(hex[1], 16)}) → ${g2}`,
+                `Resultado binario: ${g1} ${g2} (${bin8})`
+              ]
+            };
+          }
+        } else if (currentConvMode === 'ipv6') {
+          const ex = generateIPv6Exercise();
+          currentExercise = {
+            type: 'single',
+            promptLabel: 'Abrevia al máximo esta dirección IPv6:',
+            promptValue: ex.fullAddr,
+            promptHint: 'Reglas: quita los ceros a la izquierda de cada grupo y sustituye el bloque seguido de ceros por :: (solo una vez).',
+            expected: ex.compressed,
+            steps: [
+              `Original: ${ex.fullAddr}`,
+              `Paso 1 (quitar ceros a la izquierda de cada grupo): ${ex.noLeadingStr}`,
+              `Paso 2 (sustituir los ${ex.zeroRunLen} grupos seguidos de ceros por ::): ${ex.compressed}`
+            ]
+          };
+        }
+      }
+
+      document.getElementById('convPromptLabel').textContent = currentExercise.promptLabel;
+      document.getElementById('convPromptValue').textContent = currentExercise.promptValue;
+      document.getElementById('convPromptHint').textContent = currentExercise.promptHint;
+    }
+
+    function submitConversionExercise(e) {
+      e.preventDefault();
+      if (!currentExercise) return;
+
+      let isCorrect = false;
+      let userSummary = '';
+
+      if (currentExercise.type === 'ipv4') {
+        const uMask = document.getElementById('ipv4MaskInput').value.trim();
+        const uNet = document.getElementById('ipv4NetInput').value.trim();
+        const uBcast = document.getElementById('ipv4BcastInput').value.trim();
+        const uHosts = document.getElementById('ipv4HostsInput').value.trim();
+
+        const exp = currentExercise.expected;
+        const okMask = uMask === exp.mask;
+        const okNet = uNet === exp.net;
+        const okBcast = uBcast === exp.bcast;
+        const okHosts = uHosts === exp.hosts;
+
+        isCorrect = okMask && okNet && okBcast && okHosts;
+        if (!isCorrect) {
+          userSummary = `Revisión → Máscara: ${okMask ? '✓' : '✗ (' + exp.mask + ')'} | Red: ${okNet ? '✓' : '✗ (' + exp.net + ')'} | Broadcast: ${okBcast ? '✓' : '✗ (' + exp.bcast + ')'} | Hosts: ${okHosts ? '✓' : '✗ (' + exp.hosts + ')'}`;
+        }
+      } else {
+        const rawUser = document.getElementById('convSingleInput').value.trim();
+        const cleanUser = rawUser.replace(/\s+/g, '').toUpperCase();
+        const cleanExp = currentExercise.expected.replace(/\s+/g, '').toUpperCase();
+        const cleanAlt = currentExercise.altExpected ? currentExercise.altExpected.replace(/\s+/g, '').toUpperCase() : null;
+
+        isCorrect = cleanUser === cleanExp || (cleanAlt && cleanUser === cleanAlt);
+      }
+
+      const box = document.getElementById('convFeedbackBox');
+      const title = document.getElementById('convFeedbackTitle');
+      const stepsEl = document.getElementById('convFeedbackSteps');
+
+      box.classList.remove('hidden');
+      if (isCorrect) {
+        convHits++;
+        convStreak++;
+        box.className = 'rounded-2xl p-4 sm:p-5 border space-y-3 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-800 text-emerald-950 dark:text-emerald-100';
+        title.textContent = '¡Correcto! Así se hace en el examen.';
+      } else {
+        convStreak = 0;
+        box.className = 'rounded-2xl p-4 sm:p-5 border space-y-3 bg-rose-50 dark:bg-rose-950/40 border-rose-300 dark:border-rose-800 text-rose-950 dark:text-rose-100';
+        title.textContent = currentExercise.type === 'ipv4'
+          ? 'Casi — revisa los campos incorrectos y los pasos:'
+          : `No es correcto. La respuesta correcta es: ${currentExercise.expected}`;
+      }
+
+      document.getElementById('convHits').textContent = convHits;
+      document.getElementById('convStreak').textContent = convStreak;
+
+      const stepLines = [];
+      if (userSummary) stepLines.push(`<div class="font-sans font-semibold mb-2">${userSummary}</div>`);
+      stepLines.push(`<div class="font-sans text-xs font-bold uppercase tracking-wider opacity-75">Explicación paso a paso:</div>`);
+      currentExercise.steps.forEach(s => {
+        stepLines.push(`<div class="bg-white/70 dark:bg-slate-900/60 px-3 py-1.5 rounded-lg">${s}</div>`);
+      });
+      stepsEl.innerHTML = stepLines.join('');
+    }
+
+    // =========================================================================
+    // 8. PESTAÑA 5: ESQUEMAS VISUALES INTERACTIVOS
+    // =========================================================================
+    const VN_DETAILS = {
+      cpu: {
+        title: 'CPU (Unidad Central de Procesamiento)',
+        text: 'Es una de las 3 unidades funcionales de Von Neumann y se encarga de interpretar y ejecutar las instrucciones. En su interior contiene la Unidad de Control (UC), la ALU y los Registros.'
+      },
+      uc: {
+        title: 'Unidad de Control (UC)',
+        text: 'Dirige y coordina todo el flujo de datos dentro de la CPU. Saca las instrucciones de la memoria, las entiende y supervisa que se ejecuten.'
+      },
+      alu: {
+        title: 'Unidad Aritmético-Lógica (ALU)',
+        text: 'Es el circuito que hace las operaciones matemáticas (sumas, restas) y lógicas (comparaciones). Siempre trabaja combinando los datos de dos en dos.'
+      },
+      registros: {
+        title: 'Registros',
+        text: 'Son memorias muy pequeñas y rapidísimas dentro de la CPU. Guardan datos temporales mientras trabaja, como el Contador de Programa o el Acumulador.'
+      },
+      memoria: {
+        title: 'Memoria Principal (RAM)',
+        text: 'Guarda los datos y las instrucciones que la CPU está usando en ese momento. Es volátil, lo que significa que pierde todo su contenido cuando se apaga el equipo.'
+      },
+      es: {
+        title: 'Sistema de Entrada / Salida',
+        text: 'Es la interfaz de comunicación con el exterior y con los periféricos (teclado, monitor, impresora y memorias auxiliares como el disco duro).'
+      },
+      buses: {
+        title: 'Buses del Sistema',
+        text: 'Son los cables o líneas físicas que conectan las partes internas del ordenador. Se dividen en bus de datos, bus de direcciones y bus de control.'
+      }
+    };
+
+    function selectVonNeumann(key) {
+      const data = VN_DETAILS[key];
+      if (!data) return;
+      document.getElementById('vnDetailTitle').textContent = data.title;
+      document.getElementById('vnDetailText').textContent = data.text;
+
+      document.querySelectorAll('.vn-box').forEach(el => {
+        const active = el.dataset.vn === key;
+        el.classList.toggle('ring-4', active);
+        el.classList.toggle('ring-indigo-400/50', active);
+      });
+    }
+
+    const TCP_LAYERS = {
+      1: {
+        title: '1. Capa de Aplicación',
+        address: 'Direcciones específicas (URLs)',
+        desc: 'Contiene los protocolos que usan los programas del usuario para pedir páginas web, traducir nombres de dominio, transferir archivos o enviar correo.',
+        protocols: [
+          { name: 'HTTP / HTTPS', info: 'Pide y recibe recursos web (puerto 80 / 443 con TLS).' },
+          { name: 'DNS', info: 'Traduce nombres de dominio (ejemplo.com) a direcciones IP (puerto 53 UDP/TCP).' },
+          { name: 'FTP', info: 'Sirve para subir, descargar y gestionar archivos entre cliente y servidor.' },
+          { name: 'SMTP', info: 'Sirve para enviar y retransmitir mensajes de correo electrónico.' },
+          { name: 'SNMP', info: 'Sirve para supervisar y gestionar equipos de red (tráfico, estado, errores).' }
+        ],
+        style: 'bg-indigo-50 dark:bg-indigo-950/50 border-indigo-400 text-indigo-900 dark:text-indigo-200'
+      },
+      2: {
+        title: '2. Capa de Transporte',
+        address: 'Números de Puerto (0 - 65.535)',
+        desc: 'Comunica aplicaciones concretas entre equipos mediante puertos (permitiendo múltiples conexiones a la vez).',
+        protocols: [
+          { name: 'TCP', info: 'Fiable y orientado a conexión: entrega en orden, usa confirmaciones y retransmite si hay fallos.' },
+          { name: 'UDP', info: 'Sin conexión y no fiable: más rápido y ligero, usado en DNS y tiempo real.' }
+        ],
+        style: 'bg-emerald-50 dark:bg-emerald-950/50 border-emerald-400 text-emerald-900 dark:text-emerald-200'
+      },
+      3: {
+        title: '3. Capa de Internet (Red)',
+        address: 'Direcciones IP (IPv4 / IPv6)',
+        desc: 'Proporciona direccionamiento lógico y encamina los paquetes entre redes distintas a través de routers.',
+        protocols: [
+          { name: 'IP', info: 'Identifica interfaces de red y encamina paquetes con entrega de "mejor esfuerzo" (best effort).' },
+          { name: 'ICMP', info: 'Envía mensajes de control, diagnóstico y errores de red (usado por ping, sin puertos).' }
+        ],
+        style: 'bg-amber-50 dark:bg-amber-950/50 border-amber-400 text-amber-900 dark:text-amber-200'
+      },
+      4: {
+        title: '4. Capa de Acceso a Red (Interfaz)',
+        address: 'Direcciones Físicas (MAC de 48 bits)',
+        desc: 'Transporta las tramas de datos por el enlace local (cableado o inalámbrico) entre dispositivos de la misma red.',
+        protocols: [
+          { name: 'Ethernet', info: 'Envía tramas por cable en una red local usando direcciones MAC (suele ir en full-duplex).' },
+          { name: 'Wi-Fi', info: 'Conecta equipos a la red local sin cables mediante ondas de radio y punto de acceso (AP).' },
+          { name: 'ARP', info: 'Actúa en la frontera con Internet: averigua la dirección MAC que corresponde a una IPv4 local.' }
+        ],
+        style: 'bg-sky-50 dark:bg-sky-950/50 border-sky-400 text-sky-900 dark:text-sky-200'
+      }
+    };
+
+    function selectTcpLayer(layerNum) {
+      const layer = TCP_LAYERS[layerNum];
+      if (!layer) return;
+      document.getElementById('tcpLayerTitle').textContent = layer.title;
+      document.getElementById('tcpLayerAddress').textContent = `Usa: ${layer.address}`;
+      document.getElementById('tcpLayerDesc').textContent = layer.desc;
+      document.getElementById('tcpLayerProtocols').innerHTML = layer.protocols.map(p => `
+        <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm">
+          <strong class="text-indigo-600 dark:text-indigo-400">${p.name}:</strong>
+          <span class="text-slate-700 dark:text-slate-300">${p.info}</span>
+        </div>
+      `).join('');
+
+      document.querySelectorAll('.tcp-layer-btn').forEach(btn => {
+        const num = Number(btn.dataset.layer);
+        const isActive = num === layerNum;
+        const baseColor = TCP_LAYERS[num].style;
+        btn.className = `tcp-layer-btn w-full text-left p-4 rounded-2xl border-2 transition flex items-center justify-between gap-3 ${baseColor} ${
+          isActive ? 'ring-4 ring-indigo-400/40 scale-[1.01] shadow-md' : 'opacity-80 hover:opacity-100'
+        }`;
+      });
+    }
+
+    function switchCompTable(compId) {
+      document.querySelectorAll('.comp-panel').forEach(p => p.classList.add('hidden'));
+      const target = document.getElementById(`comp-${compId}`);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('.comp-tab-btn').forEach(btn => {
+        const active = btn.dataset.comp === compId;
+        btn.className = `comp-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition ${
+          active
+            ? 'bg-indigo-600 text-white shadow-sm'
+            : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+        }`;
+      });
+    }
+
+    // =========================================================================
+    // 9. INICIALIZACIÓN DE LA APLICACIÓN
+    // =========================================================================
+    function initApp() {
+      loadState();
+      applyTheme();
+      switchMainTab('apuntes');
+      updateGlobalProgress();
+      renderNotesContent();
+      renderFlashcard();
+      renderBitSwitches();
+      renderConvModeButtons();
+      generateConversionExercise();
+      selectVonNeumann('cpu');
+      selectTcpLayer(1);
+      switchCompTable('tcpudp');
+    }
+
+    window.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
